@@ -6,17 +6,18 @@
 var gamescreen = new Image();  
 var goalie = new Image();
 var ball = new Image();
-var fcount = 1;
+var frame_count = 1;
+var frame_rate = 30;
 
 function init() {
   gamescreen.src = 'GameScreen.png';  
   goalie.src = 'Goalie_Sitting.png';  
   ball.src = 'Ball_01.png';  
-  setInterval(draw,100);   
+  setInterval(draw, 1000 / frame_rate);   
 } 
 
 function draw() {
-      fcount = fcount + 1;
+      frame_count ++;
       var ctx = document.getElementById('canvas').getContext('2d');  
       
       //ctx.globalCompositeOperation = 'destination-over';  
@@ -28,11 +29,15 @@ function draw() {
       
       ctx.drawImage(gamescreen,0,0); 
       ctx.drawImage(goalie,235,85,40,60);  
-      ctx.drawImage(ball,200,360,100,100);  
+      ctx.save();
+      ctx.translate(250,410);
+      ctx.rotate(Math.PI * 2 * frame_count / frame_rate);
+      ctx.drawImage(ball,-50,-50,100,100);  
+      ctx.restore();  
 
       ctx.font = "bold 25px sans-serif";
       ctx.fillText("You Missed!",200,200); 
-      document.getElementById('framecounter').innerHTML = "Frame Count: " + fcount;
+      document.getElementById('framecounter').innerHTML = "Frame Count: " + frame_count;
     }  
 </script>
 </head>
