@@ -1,0 +1,44 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<title>QuickKick</title>
+<head>
+<script type='text/javascript'>
+var gamescreen = new Image();  
+var goalie = new Image();
+var ball = new Image();
+var fcount = 1;
+
+function init() {
+  gamescreen.src = 'GameScreen.png';  
+  goalie.src = 'Goalie_Sitting.png';  
+  ball.src = 'Ball_01.png';  
+  setInterval(draw,100);   
+} 
+
+function draw() {
+      fcount = fcount + 1;
+      var ctx = document.getElementById('canvas').getContext('2d');  
+      
+      //ctx.globalCompositeOperation = 'destination-over';  
+      ctx.clearRect(0,0,500,500); // clear canvas  
+      
+      ctx.save(); 
+      ctx.translate(0,0);
+      ctx.restore();  
+      
+      ctx.drawImage(gamescreen,0,0); 
+      ctx.drawImage(goalie,235,85,40,60);  
+      ctx.drawImage(ball,200,360,100,100);  
+
+      ctx.font = "bold 25px sans-serif";
+      ctx.fillText("You Missed!",200,200); 
+      document.getElementById('framecounter').innerHTML = "Frame Count: " + fcount;
+    }  
+</script>
+</head>
+<body onload="init();">
+<canvas id="canvas" width="500" height="500">You're browser doesn't support canvas</canvas> 
+<h2 id="framecounter">Frame Count: </h2>
+</body>
+</html>
+
