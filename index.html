@@ -8,12 +8,17 @@ var goalie = new Image();
 var ball = new Image();
 var frame_count = 1;
 var frame_rate = 30;
+var intervalTimerID=0;
+var dateOb = new Date();
+var animationTimeStamp = Date.now();
 
 function init() {
   gamescreen.src = 'images/GameScreen.png';  
   goalie.src = 'images/Goalie_Sitting.png';  
   ball.src = 'images/Ball_01.png';  
-  setInterval(draw, 1000 / frame_rate);   
+  //setTimeout(draw, 1000 / frame_rate);  
+  animationTimeStamp = Date.now(); 
+  intervalTimerID = setInterval(draw, 1000 / frame_rate);   
 } 
 
 function draw() {
@@ -34,12 +39,18 @@ function draw() {
       ctx.font = "bold 25px sans-serif";
       ctx.fillText("You Missed!",200,200); 
       document.getElementById('framecounter').innerHTML = "Frame Count: " + frame_count;
+      //document.getElementById('timer').innerHTML = "Timer: " + dateOb.getMilliseconds();
+      document.getElementById('timer').innerHTML = "Timer: " + (Date.now() - animationTimeStamp);
+      /*if (frame_count == 60) {
+        clearInterval(intervalTimerID);
+      } */
     }  
 </script>
 </head>
 <body onload="init();">
 <canvas id="canvas" width="500" height="500">You're browser doesn't support canvas</canvas> 
 <h2 id="framecounter">Frame Count: </h2>
+<h2 id="timer">Time: </h2>
 </body>
 </html>
 
