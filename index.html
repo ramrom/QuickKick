@@ -3,48 +3,87 @@
 <title>QuickKick</title>
 <head>
 <script type='text/javascript'>
-var gamescreen = new Image();  
+var homeScreen = new Image();
+var gameScreen = new Image();  
+var endScreen = new Image();  
 var goalie = new Image();
 var ball = new Image();
-var frame_count = 1;
-var frame_rate = 30;
+
+var game = {"score":0, "level":0, "shotsLeft": 5, "shotsMade": 0, "shotsMissed":0};
+
+var frameCount = 1;
+var frameRate = 30;
 var intervalTimerID=0;
-var dateOb = new Date();
 var animationTimeStamp = Date.now();
+var ballStartingPosition = {"x":250, "y":410};
+var goalieStartingPosition = {"x":250, "y":115};
 
 function init() {
-  gamescreen.src = 'images/GameScreen.png';  
+  gameScreen.src = 'images/GameScreen.png';  
   goalie.src = 'images/Goalie_Sitting.png';  
   ball.src = 'images/Ball_01.png';  
-  //setTimeout(draw, 1000 / frame_rate);  
+  //setTimeout(draw, 1000 / frameRate); 
   animationTimeStamp = Date.now(); 
-  intervalTimerID = setInterval(draw, 1000 / frame_rate);   
+  intervalTimerID = setInterval(draw, 1000 / frameRate);   
 } 
 
-function draw() {
-      frame_count ++;
-      var ctx = document.getElementById('canvas').getContext('2d');  
-      
-      //ctx.globalCompositeOperation = 'destination-over';  
-      ctx.clearRect(0,0,500,500); // clear canvas  
-      
-      ctx.drawImage(gamescreen,0,0); 
-      ctx.drawImage(goalie,235,85,40,60);  
-      ctx.save();
-      ctx.translate(250,410);
-      ctx.rotate(Math.PI * 2 * frame_count / frame_rate);
-      ctx.drawImage(ball,-50,-50,100,100);  
-      ctx.restore();  
+function drawHomeScreen() {
+}
 
-      ctx.font = "bold 25px sans-serif";
-      ctx.fillText("You Missed!",200,200); 
-      document.getElementById('framecounter').innerHTML = "Frame Count: " + frame_count;
-      //document.getElementById('timer').innerHTML = "Timer: " + dateOb.getMilliseconds();
-      document.getElementById('timer').innerHTML = "Timer: " + (Date.now() - animationTimeStamp);
-      /*if (frame_count == 60) {
-        clearInterval(intervalTimerID);
-      } */
-    }  
+function drawEndScreen() {
+}
+
+function drawStatusBar() {
+  var ctx = document.getElementById('canvas').getContext('2d');  
+  ctx.save();
+  
+  //draw black bar 
+  ctx.clearRect(0,0,500,25); // clear canvas  
+  ctx.fillStyle = 'rgba(0,0,0,1)';
+  ctx.fillRect(0,0,500,25);
+ 
+  //draw the status texts
+  ctx.font = "bold 18px sans-serif";
+  ctx.fillStyle = "blue";
+  var txt = "Score: " + game["score"] + "       Shots Left: " + game["shotsLeft"] + "       Level: " + game["level"];
+  ctx.fillText(txt,5,19); 
+
+  ctx.restore();
+}
+
+function draw() {
+  frameCount ++;
+     
+  //ctx.globalCompositeOperation = 'destination-over';  
+  var ctx = document.getElementById('canvas').getContext('2d');  
+  ctx.clearRect(0,0,500,500); // clear canvas  
+   
+  ctx.drawImage(gameScreen,0,0);
+
+  ctx.save();
+  //ctx.globalAlpha = 0.5;
+  ctx.translate(goalieStartingPosition['x'],goalieStartingPosition['y']);
+  ctx.drawImage(goalie,-20,-30,40,60);  
+  ctx.restore();  
+
+  ctx.save();
+  //ctx.globalAlpha = 0.5;
+  ctx.translate(ballStartingPosition['x'],ballStartingPosition['y']);
+  ctx.rotate(Math.PI * 2 * frameCount / frameRate);
+  ctx.drawImage(ball,-50,-50,100,100);  
+  ctx.restore();  
+
+  drawStatusBar();
+
+  ctx.font = "bold 25px sans-serif";
+  ctx.fillText("You Missed!",200,200); 
+  document.getElementById('framecounter').innerHTML = "Frame Count: " + frameCount;
+  //document.getElementById('timer').innerHTML = "Timer: " + dateOb.getMilliseconds();
+  document.getElementById('timer').innerHTML = "Timer: " + (Date.now() - animationTimeStamp);
+  /*if (frameCount == 60) {
+    clearInterval(intervalTimerID);
+  } */
+  }  
 </script>
 </head>
 <body onload="init();">
