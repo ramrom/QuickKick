@@ -2,14 +2,11 @@
 <html>
 <title>QuickKick</title>
 <head>
+<script type="text/javascript" src="graphics.js"></script>
+<script type="text/javascript" src="gameEngine.js"></script>
 <script type='text/javascript'>
-var homeScreen = new Image();
-var gameScreen = new Image();  
-var endScreen = new Image();  
-var goalie = new Image();
-var ball = new Image();
 
-var game = {"score":0, "level":0, "shotsLeft": 5, "shotsMade": 0, "shotsMissed":0};
+var images = {};
 
 var frameCount = 1;
 var frameRate = 30;
@@ -18,44 +15,25 @@ var animationTimeStamp = Date.now();
 var ballStartingPosition = {"x":250, "y":410};
 var goalieStartingPosition = {"x":250, "y":115};
 
-function init() {
+function preloader() {
   gameScreen.src = 'images/GameScreen.png';  
   goalie.src = 'images/Goalie_Sitting.png';  
   ball.src = 'images/Ball_01.png';  
+  //images["foo"] = 
+}
+
+function init() {
+  preloader();
   //setTimeout(draw, 1000 / frameRate); 
   animationTimeStamp = Date.now(); 
   intervalTimerID = setInterval(draw, 1000 / frameRate);   
 } 
 
-function drawHomeScreen() {
-}
-
-function drawEndScreen() {
-}
-
-function drawStatusBar() {
-  var ctx = document.getElementById('canvas').getContext('2d');  
-  ctx.save();
-  
-  //draw black bar 
-  ctx.clearRect(0,0,500,25); // clear canvas  
-  ctx.fillStyle = 'rgba(0,0,0,1)';
-  ctx.fillRect(0,0,500,25);
- 
-  //draw the status texts
-  ctx.font = "bold 18px sans-serif";
-  ctx.fillStyle = "blue";
-  var txt = "Score: " + game["score"] + "       Shots Left: " + game["shotsLeft"] + "       Level: " + game["level"];
-  ctx.fillText(txt,5,19); 
-
-  ctx.restore();
-}
-
 function draw() {
   frameCount ++;
      
   //ctx.globalCompositeOperation = 'destination-over';  
-  var ctx = document.getElementById('canvas').getContext('2d');  
+  var ctx = document.getElementById('gamecanvas').getContext('2d');  
   ctx.clearRect(0,0,500,500); // clear canvas  
    
   ctx.drawImage(gameScreen,0,0);
@@ -77,9 +55,6 @@ function draw() {
 
   ctx.font = "bold 25px sans-serif";
   ctx.fillText("You Missed!",200,200); 
-  document.getElementById('framecounter').innerHTML = "Frame Count: " + frameCount;
-  //document.getElementById('timer').innerHTML = "Timer: " + dateOb.getMilliseconds();
-  document.getElementById('timer').innerHTML = "Timer: " + (Date.now() - animationTimeStamp);
   /*if (frameCount == 60) {
     clearInterval(intervalTimerID);
   } */
@@ -87,9 +62,11 @@ function draw() {
 </script>
 </head>
 <body onload="init();">
-<canvas id="canvas" width="500" height="500">You're browser doesn't support canvas</canvas> 
+<canvas id="gamecanvas" width="500" height="500">You're browser doesn't support canvas</canvas> 
+<div id="debuginfo">
 <h2 id="framecounter">Frame Count: </h2>
 <h2 id="timer">Time: </h2>
+</div>
 </body>
 </html>
 
