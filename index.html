@@ -6,61 +6,16 @@
 <script type="text/javascript" src="gameEngine.js"></script>
 <script type='text/javascript'>
 
-var images = {};
-
-var frameCount = 1;
-var frameRate = 30;
-var intervalTimerID=0;
-var animationTimeStamp = Date.now();
-var ballStartingPosition = {"x":250, "y":410};
-var goalieStartingPosition = {"x":250, "y":115};
-
-function preloader() {
-  gameScreen.src = 'images/GameScreen.png';  
-  goalie.src = 'images/Goalie_Sitting.png';  
-  ball.src = 'images/Ball_01.png';  
-  //images["foo"] = 
-}
-
 function init() {
-  preloader();
   //setTimeout(draw, 1000 / frameRate); 
   animationTimeStamp = Date.now(); 
   intervalTimerID = setInterval(draw, 1000 / frameRate);   
 } 
 
-function draw() {
-  frameCount ++;
-     
-  //ctx.globalCompositeOperation = 'destination-over';  
-  var ctx = document.getElementById('gamecanvas').getContext('2d');  
-  ctx.clearRect(0,0,500,500); // clear canvas  
-   
-  ctx.drawImage(gameScreen,0,0);
-
-  ctx.save();
-  //ctx.globalAlpha = 0.5;
-  ctx.translate(goalieStartingPosition['x'],goalieStartingPosition['y']);
-  ctx.drawImage(goalie,-20,-30,40,60);  
-  ctx.restore();  
-
-  ctx.save();
-  //ctx.globalAlpha = 0.5;
-  ctx.translate(ballStartingPosition['x'],ballStartingPosition['y']);
-  ctx.rotate(Math.PI * 2 * frameCount / frameRate);
-  ctx.drawImage(ball,-50,-50,100,100);  
-  ctx.restore();  
-
-  drawStatusBar();
-
-  ctx.font = "bold 25px sans-serif";
-  ctx.fillText("You Missed!",200,200); 
-  /*if (frameCount == 60) {
-    clearInterval(intervalTimerID);
-  } */
-  }  
 </script>
+
 </head>
+
 <body onload="init();">
 <canvas id="gamecanvas" width="500" height="500">You're browser doesn't support canvas</canvas> 
 <div id="debuginfo">
