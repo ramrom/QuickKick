@@ -2,39 +2,47 @@
 <html>
 <title>QuickKick</title>
 <head>
+<script type="text/javascript" src="jquery.min.js"></script>
 <script type="text/javascript" src="graphics.js"></script>
 <script type="text/javascript" src="gameEngine.js"></script>
-<script type="text/javascript" src="jquery.min.js"></script>
+
 <script type='text/javascript'>
 
 var showDebugging = false;
 
 function init() {
-  //setTimeout(draw, 1000);    //would call draw 1000 miliseconds later
   animationTimeStamp = Date.now(); 
-  //intervalTimerID = setInterval(draw, 1000 / frameRate);   
-  var canv = document.getElementById('gamecanvas');  
-  var ctx = canv.getContext('2d');  
-  //canv.addEventListener('click',clear,false);
   drawHomeScreen();
+  $("#gamecanvas").click(function(){canvasMouseClickHandler(event);});
+  document.onmousemove = writeMousePosition;
 } 
 
-function clear() {
-
-  clearInterval(intervalTimerID);   // will stop the function from running on interval
-}
-
-$(document).keyup(toggleDebugInfo);
+/*    need to find out why drawHomeScreenhere doesn't work right
+$(document).ready(function(){
+  animationTimeStamp = Date.now(); 
+  drawHomeScreen();
+  $("#gamecanvas").click(function(){canvasMouseClickHandler(event);});
+});
+*/
 
 </script>
-
 </head>
 
-<body onload="init();">
+<body onload="init()">
+
 <canvas id="gamecanvas" width="500" height="500">You're browser doesn't support canvas</canvas> 
+
+<form>
+<input type="button" id="debugbutton" value="Toggle Debugging Info" onClick="toggleDebugInfo()">
+</form>
 <div id="debuginfo">
 <form>
-<input type="button" value="Toggle Debugging Info" onClick="toggleDebugInfo()">
+<br />
+<input type="text" id="browsercursorX" size="3"> X-position mouse browser
+<input type="text" id="browsercursorY" size="3"> Y-position mouse browser
+<br />
+<input type="text" id="canvascursorX" size="3"> X-position mouse canvas
+<input type="text" id="canvascursorY" size="3"> Y-position mouse canvas
 </form>
 <h4 id="framecounter">Frame Count: </h4>
 <h4 id="framerate">Frame Rate: </h4>

@@ -27,7 +27,7 @@ goalieJumpSoftLeft.src = 'images/Goalie_JumpingLeft.png';
 goalieJumpSoftRight.src = 'images/Goalie_JumpingRight.png';  
 ball.src = 'images/Ball_01.png';  
 
-var frameRate = 30;            //target frame rate
+var frameRate = 30;            //target frames per second
 var kickAnimDuration = 1500;     //total length in miliseconds of kick animations
 var intervalTimerID=0;
 var frameCount = 1;
@@ -41,6 +41,7 @@ function drawmain() {
   var canv = document.getElementById('gamecanvas');  
   canv.removeEventListener('click',drawmain,false);
   canv.addEventListener('click',drawEndScreen,false);
+  //setTimeout(draw, 1000);    //would call draw 1000 miliseconds later
 }
 
 
@@ -75,21 +76,67 @@ function draw() {
   } */
 }  
 
+function drawGoalie(posture,Xpos,Ypos) {
+  var canv = document.getElementById('gamecanvas');  
+  var ctx = canv.getContext('2d');  
+  ctx.save();
+  //ctx.globalAlpha = 0.5;
+  ctx.translate(Xpos,Ypos);
+  switch (posture) {
+    case "jumpup":
+      ctx.drawImage(goalieJumpUp,-20,-30,40,60);  
+      break;
+    case "jumphardleft":
+      ctx.drawImage(goalieJumpHardLeft,-20,-30,40,60);  
+      break;
+    case "jumphardright":
+      ctx.drawImage(goalieJumpHardRight,-20,-30,40,60);  
+      break;
+    case "jumpsoftleft":
+      ctx.drawImage(goalieJumpSoftLeft,-20,-30,40,60);  
+      break;
+    case "jumpsoftright":
+      ctx.drawImage(goalieJumpSoftRight,-20,-30,40,60);  
+      break;
+    default:
+      ctx.drawImage(goalieReadyPosition,-20,-30,40,60);  
+      break;
+  }
+  ctx.restore();  
+}
+
+function drawBall(size,Xpos,Ypos) {
+  var canv = document.getElementById('gamecanvas');  
+  var ctx = canv.getContext('2d');  
+  ctx.save();
+  //ctx.globalAlpha = 0.5;
+  ctx.translate(Xpos,Ypos);
+  ctx.rotate(Math.PI * 2 * frameCount / frameRate);
+  ctx.drawImage(ball,-50,-50,100,100);  
+  ctx.restore();  
+}
+
+function drawGameScreen() {
+  var canv = document.getElementById('gamecanvas');  
+  var ctx = canv.getContext('2d');  
+  ctx.drawImage(gameScreen,0,0);
+}
+
 function drawHomeScreen() {
   var canv = document.getElementById('gamecanvas');  
   var ctx = canv.getContext('2d');  
-  canv.removeEventListener('click',drawHomeScreen,false);
+  //canv.removeEventListener('click',drawHomeScreen,false);
   ctx.drawImage(homeScreen,0,0);
-  canv.addEventListener('click',drawmain,false);
+  //canv.addEventListener('click',drawmain,false);
 }
 
 function drawEndScreen() {
   var canv = document.getElementById('gamecanvas');  
   var ctx = canv.getContext('2d');  
   clearInterval(intervalTimerID);   // will stop the function from running on interval
-  canv.removeEventListener('click',drawEndScreen,false);
+  //canv.removeEventListener('click',drawEndScreen,false);
   ctx.drawImage(endScreen,0,0);
-  canv.addEventListener('click',drawHomeScreen,false);
+  //canv.addEventListener('click',drawHomeScreen,false);
 }
 
 function drawHighScoreScreen() {
