@@ -11,7 +11,7 @@
 function init() {
   animationTimeStamp = Date.now(); 
   drawHomeScreen();
-  $("#gamecanvas").click(function(){canvasMouseClickHandler(event);});
+  $("#gamecanvas").click(function(event){canvasMouseClickHandler(event);});
   debugWriteIntervalID = setInterval(writeDebugInfo, 1000/frameRate);
   document.onmousemove = writeMousePosition;
 } 
