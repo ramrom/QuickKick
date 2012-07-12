@@ -18,7 +18,7 @@ var goalieJumpSoftLeft = new Image();
 homeScreen.src = 'images/HomeScreen.png';  
 gameScreen.src = 'images/GameScreen.png';  
 endScreen.src = 'images/EndScreen.png';  
-highScoreScreen.src = 'images/HighScoreScreen_02.png';  
+highScoreScreen.src = 'images/HighScoreScreen_01.png';  
 goalieReadyPosition.src = 'images/Goalie_Sitting.png';  
 goalieJumpUp.src = 'images/Goalie_JumpingUp.png';  
 goalieJumpHardRight.src = 'images/Goalie_Jumping_HardRight.png';  
@@ -28,16 +28,23 @@ goalieJumpSoftRight.src = 'images/Goalie_JumpingRight.png';
 ball.src = 'images/Ball_01.png';  
 
 var frameRate = 30;            //target frames per second
-var kickAnimDuration = 1500;     //total length in miliseconds of kick animations
-var intervalTimerID=0;
+var totalAnimationDuration = 1500;     //total length in miliseconds of kick animations
+var ballShotTimeToGoal = 500;
+var animationTimerID=0;
 var frameCount = 1;
-var animationTimeStamp = Date.now();
+var animationStartTimeStamp = Date.now();
 
 var ballStartingPosition = {"x":250, "y":410};
 var goalieStartingPosition = {"x":250, "y":115};
+var goalieEndingPositions = {"hardleft":{"x":160,"y":90},
+			     "hardright":{"x":340,"y":90},
+			     "softleft":{"x":210,"y":75},
+			     "softright":{"x":290,"y":75},
+			     "up":{"x":250,"y":70}}
+
 
 function drawmain() {
-  intervalTimerID = setInterval(draw, 1000 / frameRate);   
+  animationTimerID = setInterval(draw, 1000 / frameRate);   
   var canv = document.getElementById('gamecanvas');  
   canv.removeEventListener('click',drawmain,false);
   canv.addEventListener('click',drawEndScreen,false);
@@ -76,6 +83,7 @@ function draw() {
   } */
 }  
 
+//posture is which goalie to draw, X and Y center positions of goalie
 function drawGoalie(posture,Xpos,Ypos) {
   var canv = document.getElementById('gamecanvas');  
   var ctx = canv.getContext('2d');  
@@ -83,19 +91,19 @@ function drawGoalie(posture,Xpos,Ypos) {
   //ctx.globalAlpha = 0.5;
   ctx.translate(Xpos,Ypos);
   switch (posture) {
-    case "jumpup":
+    case "up":
       ctx.drawImage(goalieJumpUp,-20,-30,40,60);  
       break;
-    case "jumphardleft":
-      ctx.drawImage(goalieJumpHardLeft,-20,-30,40,60);  
+    case "hardleft":
+      ctx.drawImage(goalieJumpHardLeft,-30,-20,60,40);  
       break;
-    case "jumphardright":
-      ctx.drawImage(goalieJumpHardRight,-20,-30,40,60);  
+    case "hardright":
+      ctx.drawImage(goalieJumpHardRight,-30,-20,60,40);  
       break;
-    case "jumpsoftleft":
+    case "softleft":
       ctx.drawImage(goalieJumpSoftLeft,-20,-30,40,60);  
       break;
-    case "jumpsoftright":
+    case "softright":
       ctx.drawImage(goalieJumpSoftRight,-20,-30,40,60);  
       break;
     default:
@@ -105,6 +113,7 @@ function drawGoalie(posture,Xpos,Ypos) {
   ctx.restore();  
 }
 
+//size in pixels, X and Y center positions of ball
 function drawBall(size,Xpos,Ypos) {
   var canv = document.getElementById('gamecanvas');  
   var ctx = canv.getContext('2d');  
@@ -112,8 +121,17 @@ function drawBall(size,Xpos,Ypos) {
   //ctx.globalAlpha = 0.5;
   ctx.translate(Xpos,Ypos);
   ctx.rotate(Math.PI * 2 * frameCount / frameRate);
-  ctx.drawImage(ball,-50,-50,100,100);  
+  ctx.drawImage(ball,-size/2,-size/2, size, size);  
   ctx.restore();  
+}
+
+function drawStatusText(message,color) {
+  var canv = document.getElementById('gamecanvas');  
+  var ctx = canv.getContext('2d');  
+  ctx.font = "bold 35px sans-serif";
+  ctx.textAlign = "center";
+  ctx.fillStyle = color;
+  ctx.fillText(message,250,250); 
 }
 
 function drawGameScreen() {
@@ -133,10 +151,8 @@ function drawHomeScreen() {
 function drawEndScreen() {
   var canv = document.getElementById('gamecanvas');  
   var ctx = canv.getContext('2d');  
-  clearInterval(intervalTimerID);   // will stop the function from running on interval
-  //canv.removeEventListener('click',drawEndScreen,false);
+  //clearInterval(intervalTimerID);   // will stop the function from running on interval
   ctx.drawImage(endScreen,0,0);
-  //canv.addEventListener('click',drawHomeScreen,false);
 }
 
 function drawHighScoreScreen() {

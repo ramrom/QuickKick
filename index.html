@@ -8,12 +8,11 @@
 
 <script type='text/javascript'>
 
-var showDebugging = false;
-
 function init() {
   animationTimeStamp = Date.now(); 
   drawHomeScreen();
   $("#gamecanvas").click(function(){canvasMouseClickHandler(event);});
+  debugWriteIntervalID = setInterval(writeDebugInfo, 1000/frameRate);
   document.onmousemove = writeMousePosition;
 } 
 
