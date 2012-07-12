@@ -4,12 +4,13 @@
 <head>
 <script type="text/javascript" src="graphics.js"></script>
 <script type="text/javascript" src="gameEngine.js"></script>
+<script type="text/javascript" src="jquery.min.js"></script>
 <script type='text/javascript'>
 
 var showDebugging = false;
 
 function init() {
-  //setTimeout(draw, 1000 / frameRate); 
+  //setTimeout(draw, 1000);    //would call draw 1000 miliseconds later
   animationTimeStamp = Date.now(); 
   //intervalTimerID = setInterval(draw, 1000 / frameRate);   
   var canv = document.getElementById('gamecanvas');  
@@ -22,6 +23,8 @@ function clear() {
 
   clearInterval(intervalTimerID);   // will stop the function from running on interval
 }
+
+$(document).keyup(toggleDebugInfo);
 
 </script>
 

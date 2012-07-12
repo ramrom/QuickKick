@@ -2,18 +2,18 @@
 var game = {"score":0, "level":0, "shotsLeft": 5, "shotsMade": 0, "shotsMissed":0};
 var gameState = "init";
 var debugInfoOn = false;
-var debugIntervalID = 0;
+var debugWriteIntervalID = 0;
 
 
 // DEBUGGING FUNCTIONS
 function toggleDebugInfo() {
   if (debugInfoOn == false) {
     debugInfoOn = true;
-    debugIntervalID = setInterval(writeDebugInfo, 1000/frameRate);
+    debugWriteIntervalID = setInterval(writeDebugInfo, 1000/frameRate);
   }
   else {
     debugInfoOn = false;
-    clearInterval(debugIntervalID);
+    clearInterval(debugWriteIntervalID);
   }
 }
   

@@ -29,10 +29,10 @@ ball.src = 'images/Ball_01.png';
 
 var frameRate = 30;            //target frame rate
 var kickAnimDuration = 1500;     //total length in miliseconds of kick animations
-
 var intervalTimerID=0;
 var frameCount = 1;
 var animationTimeStamp = Date.now();
+
 var ballStartingPosition = {"x":250, "y":410};
 var goalieStartingPosition = {"x":250, "y":115};
 
