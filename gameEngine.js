@@ -1,10 +1,31 @@
 //this is the game engine
 var game = {"score":0, "level":0, "shotsLeft": 5, "shotsMade": 0, "shotsMissed":0};
+var gameState = "init";
+var debugInfoOn = false;
+var debugIntervalID = 0;
 
+
+// DEBUGGING FUNCTIONS
+function toggleDebugInfo() {
+  if (debugInfoOn == false) {
+    debugInfoOn = true;
+    debugIntervalID = setInterval(writeDebugInfo, 1000/frameRate);
+  }
+  else {
+    debugInfoOn = false;
+    clearInterval(debugIntervalID);
+  }
+}
+  
 function writeDebugInfo() {
   document.getElementById('framecounter').innerHTML = "Frame Count: " + frameCount;
-  document.getElementById('timer').innerHTML = "Timer: " + (Date.now() - animationTimeStamp);
+  document.getElementById('timer').innerHTML = "Time: " + (Date.now() - animationTimeStamp);
+  document.getElementById('framerate').innerHTML = "Frame Rate: " + frameRate;
+  document.getElementById('gamestate').innerHTML = "Game State: " + gameState;
 }
+
+
+// Game Screens 
 
 function writeHomeScreen() {
   drawHomeScreen();

@@ -36,6 +36,14 @@ var animationTimeStamp = Date.now();
 var ballStartingPosition = {"x":250, "y":410};
 var goalieStartingPosition = {"x":250, "y":115};
 
+function drawmain() {
+  intervalTimerID = setInterval(draw, 1000 / frameRate);   
+  var canv = document.getElementById('gamecanvas');  
+  canv.removeEventListener('click',drawmain,false);
+  canv.addEventListener('click',drawEndScreen,false);
+}
+
+
 function draw() {
   frameCount ++;
      
@@ -68,14 +76,25 @@ function draw() {
 }  
 
 function drawHomeScreen() {
+  var canv = document.getElementById('gamecanvas');  
+  var ctx = canv.getContext('2d');  
+  canv.removeEventListener('click',drawHomeScreen,false);
   ctx.drawImage(homeScreen,0,0);
+  canv.addEventListener('click',drawmain,false);
 }
 
 function drawEndScreen() {
+  var canv = document.getElementById('gamecanvas');  
+  var ctx = canv.getContext('2d');  
+  clearInterval(intervalTimerID);   // will stop the function from running on interval
+  canv.removeEventListener('click',drawEndScreen,false);
   ctx.drawImage(endScreen,0,0);
+  canv.addEventListener('click',drawHomeScreen,false);
 }
 
 function drawHighScoreScreen() {
+  var canv = document.getElementById('gamecanvas');  
+  var ctx = canv.getContext('2d');  
   ctx.drawImage(highScoreScreen,0,0);
 }
 
@@ -84,7 +103,7 @@ function drawStatusBar() {
   ctx.save();
   
   //draw black bar 
-  ctx.clearRect(0,0,500,25); // clear canvas  
+  //ctx.clearRect(0,0,500,25); // clear canvas  
   ctx.fillStyle = 'rgba(0,0,0,1)';
   ctx.fillRect(0,0,500,25);
  
