@@ -27,61 +27,23 @@ goalieJumpSoftLeft.src = 'images/Goalie_JumpingLeft.png';
 goalieJumpSoftRight.src = 'images/Goalie_JumpingRight.png';  
 ball.src = 'images/Ball_01.png';  
 
-var frameRate = 30;            //target frames per second
-var totalAnimationDuration = 1500;     //total length in miliseconds of kick animations
+var frameRate = 40;            //target frames per second
+var totalAnimationDuration = 700;     //total length in miliseconds of kick animations
 var ballShotTimeToGoal = 500;
 var animationTimerID=0;
+var animationTimerID2=0;
 var frameCount = 1;
 var animationStartTimeStamp = Date.now();
 
 var ballStartingPosition = {"x":250, "y":410};
 var goalieStartingPosition = {"x":250, "y":115};
+var positionKeyWords = ["up","hardleft","hardright","softleft","softright"];
 var goalieEndingPositions = {"hardleft":{"x":160,"y":90},
 			     "hardright":{"x":340,"y":90},
 			     "softleft":{"x":210,"y":75},
 			     "softright":{"x":290,"y":75},
 			     "up":{"x":250,"y":70}}
 
-
-function drawmain() {
-  animationTimerID = setInterval(draw, 1000 / frameRate);   
-  var canv = document.getElementById('gamecanvas');  
-  canv.removeEventListener('click',drawmain,false);
-  canv.addEventListener('click',drawEndScreen,false);
-  //setTimeout(draw, 1000);    //would call draw 1000 miliseconds later
-}
-
-
-function draw() {
-  frameCount ++;
-     
-  //ctx.globalCompositeOperation = 'destination-over';  
-  var ctx = document.getElementById('gamecanvas').getContext('2d');  
-  ctx.clearRect(0,0,500,500); // clear canvas  
-   
-  ctx.drawImage(gameScreen,0,0);
-
-  ctx.save();
-  //ctx.globalAlpha = 0.5;
-  ctx.translate(goalieStartingPosition['x'],goalieStartingPosition['y']);
-  ctx.drawImage(goalieReadyPosition,-20,-30,40,60);  
-  ctx.restore();  
-
-  ctx.save();
-  //ctx.globalAlpha = 0.5;
-  ctx.translate(ballStartingPosition['x'],ballStartingPosition['y']);
-  ctx.rotate(Math.PI * 2 * frameCount / frameRate);
-  ctx.drawImage(ball,-50,-50,100,100);  
-  ctx.restore();  
-
-  drawStatusBar();
-
-  ctx.font = "bold 25px sans-serif";
-  ctx.fillText("You Missed!",200,200); 
-  /*if (frameCount == 60) {
-    clearInterval(intervalTimerID);
-  } */
-}  
 
 //posture is which goalie to draw, X and Y center positions of goalie
 function drawGoalie(posture,Xpos,Ypos) {
@@ -118,9 +80,8 @@ function drawBall(size,Xpos,Ypos) {
   var canv = document.getElementById('gamecanvas');  
   var ctx = canv.getContext('2d');  
   ctx.save();
-  //ctx.globalAlpha = 0.5;
   ctx.translate(Xpos,Ypos);
-  ctx.rotate(Math.PI * 2 * frameCount / frameRate);
+  ctx.rotate(Math.PI * 8 * frameCount / frameRate);
   ctx.drawImage(ball,-size/2,-size/2, size, size);  
   ctx.restore();  
 }
@@ -143,6 +104,7 @@ function drawGameScreen() {
 function drawHomeScreen() {
   var canv = document.getElementById('gamecanvas');  
   var ctx = canv.getContext('2d');  
+  ctx.clearRect(0,0,500,500); // clear canvas  
   //canv.removeEventListener('click',drawHomeScreen,false);
   ctx.drawImage(homeScreen,0,0);
   //canv.addEventListener('click',drawmain,false);
@@ -151,7 +113,6 @@ function drawHomeScreen() {
 function drawEndScreen() {
   var canv = document.getElementById('gamecanvas');  
   var ctx = canv.getContext('2d');  
-  //clearInterval(intervalTimerID);   // will stop the function from running on interval
   ctx.drawImage(endScreen,0,0);
 }
 
@@ -159,6 +120,58 @@ function drawHighScoreScreen() {
   var canv = document.getElementById('gamecanvas');  
   var ctx = canv.getContext('2d');  
   ctx.drawImage(highScoreScreen,0,0);
+}
+
+function drawSliderBars() {
+  var ctx = document.getElementById('gamecanvas').getContext('2d');  
+  ctx.save();
+  ctx.fillStyle = 'rgba(256,256,256,.5)';
+  ctx.fillRect(0,0,500,500);
+
+  ctx.lineWidth = 20;
+  ctx.strokeStyle = "orange";
+  ctx.lineCap = "round";
+  ctx.globalAlpha = 0.5;
+  ctx.beginPath();
+  ctx.moveTo(25,250);
+  ctx.lineTo(475,250);
+  ctx.stroke();
+
+  ctx.beginPath();
+  ctx.moveTo(250,25);
+  ctx.lineTo(250,475);
+  ctx.stroke();
+
+  ctx.lineWidth = 2;
+  ctx.strokeStyle = "green";
+  ctx.lineCap = "square";
+
+  ctx.beginPath();
+  ctx.moveTo(25,250);
+  ctx.lineTo(475,250);
+  ctx.stroke();
+
+  ctx.beginPath();
+  ctx.moveTo(250,25);
+  ctx.lineTo(250,475);
+  ctx.stroke();
+
+  ctx.beginPath();
+  ctx.globalAlpha = .7;
+  ctx.strokeStyle = "red";
+  ctx.lineWidth = 15;
+  ctx.arc(250,250,slider.precision,0, 2 * Math.PI, false);
+  ctx.stroke();
+
+  ctx.globalAlpha = 1;
+  for (var i=0;i<4;i++){  
+    ctx.beginPath();  
+    ctx.rotate(Math.PI/2);  
+    ctx.moveTo(250 + 3 * slider.precision/4,250);  
+    ctx.lineTo(250 + 5 * slider.precision/4,250);  
+    ctx.stroke();  
+  }  
+  ctx.restore();
 }
 
 function drawStatusBar() {
