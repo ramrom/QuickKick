@@ -125,6 +125,7 @@ function canvasMouseClickHandler(e) {
 
     case "newgame":
       currentSliderX = true;
+      sliderClickPosition = {"x":0,"y":0};
       drawGoalie("sitting",goalieStartingPosition.x,goalieStartingPosition.y);
       drawBall(100,ballStartingPosition.x,ballStartingPosition.y);
       gameState = "slideranimationX"; 
@@ -191,8 +192,11 @@ function drawSliderAnim() {
   drawGameScreen();
   drawStatusBar();
   drawSliderBars();
-  if (currentSliderX == true) {
-    drawBall(40,25 + (slider.speed / 20) * (Date.now() - animationStartTimeStamp) % 450, 250 );
+  $("#sliderX").attr("value",sliderClickPosition.x);
+  $("#sliderY").attr("value",sliderClickPosition.y);
+  if (currentSliderX == true) { 
+    sliderClickPosition.x =  25 + ((slider.speed / 20) * (Date.now() - animationStartTimeStamp)) % 450;
+    drawBall(40, sliderClickPosition.x, 250 );
   }
   else {
   }
