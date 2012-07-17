@@ -132,14 +132,15 @@ function drawSliderBars() {
   ctx.strokeStyle = "orange";
   ctx.lineCap = "round";
   ctx.globalAlpha = 0.5;
+
   ctx.beginPath();
-  ctx.moveTo(25,250);
-  ctx.lineTo(475,250);
+  ctx.moveTo(50,250);
+  ctx.lineTo(450,250);
   ctx.stroke();
 
   ctx.beginPath();
-  ctx.moveTo(250,25);
-  ctx.lineTo(250,475);
+  ctx.moveTo(250,50);
+  ctx.lineTo(250,450);
   ctx.stroke();
 
   ctx.lineWidth = 2;
@@ -147,15 +148,16 @@ function drawSliderBars() {
   ctx.lineCap = "square";
 
   ctx.beginPath();
-  ctx.moveTo(25,250);
-  ctx.lineTo(475,250);
+  ctx.moveTo(50,250);
+  ctx.lineTo(450,250);
   ctx.stroke();
 
   ctx.beginPath();
-  ctx.moveTo(250,25);
-  ctx.lineTo(250,475);
+  ctx.moveTo(250,50);
+  ctx.lineTo(250,450);
   ctx.stroke();
 
+  //draw the bullseye
   ctx.beginPath();
   ctx.globalAlpha = .7;
   ctx.strokeStyle = "red";

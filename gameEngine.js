@@ -124,11 +124,8 @@ function canvasMouseClickHandler(e) {
       break;
 
     case "newgame":
-      currentSliderX = true;
-      sliderClickPosition = {"x":0,"y":0};
-      drawGoalie("sitting",goalieStartingPosition.x,goalieStartingPosition.y);
-      drawBall(100,ballStartingPosition.x,ballStartingPosition.y);
-      gameState = "slideranimationX"; 
+      newTurn();
+      gameState = "inputsliders"; 
       break;
 
     case "shotanimation":
@@ -144,14 +141,18 @@ function canvasMouseClickHandler(e) {
       gameState = "inanimation"; 
       break;
    
-    case "slideranimationX":
-      animationStartTimeStamp = Date.now();
-      animationTimerID = setInterval(drawSliderAnim, 1000 / frameRate);   
-      gameState = "slideranimationY";
+    case "inputsliders":
+      if (currentSliderX == true) {
+        currentSliderX = false;
+      }
+      else {
+        clearInterval(animationTimerID);
+        gameState = "shotanimation";
+      }
       //(currentSliderX == true) ? currentSliderX=false : gameState = "shotanimation"; clearInterval(animationTimerID);
       break;
 
-    case "slideranimationY":
+    case "newlevel":
       currentSliderX=true;
       gameState = "shotanimation";
       clearInterval(animationTimerID);
@@ -181,7 +182,8 @@ function drawMissAnim() {
   else {
     clearInterval(animationTimerID);
     drawSliderBars();
-    gameState = "newgame";
+    gameState = "inputsliders";
+    newTurn();
   }
   //keyword = keywords[Math.floor(Math.random()*keywords.length)];
   //drawStatusText("You Missed!","red");
@@ -195,10 +197,19 @@ function drawSliderAnim() {
   $("#sliderX").attr("value",sliderClickPosition.x);
   $("#sliderY").attr("value",sliderClickPosition.y);
   if (currentSliderX == true) { 
-    sliderClickPosition.x =  25 + ((slider.speed / 20) * (Date.now() - animationStartTimeStamp)) % 450;
-    drawBall(40, sliderClickPosition.x, 250 );
+    sliderClickPosition.x =  (slider.speed / 20) * (Date.now() - animationStartTimeStamp) % 800;
+    if (sliderClickPosition.x > 400) {
+      sliderClickPosition.x = 800 - sliderClickPosition.x;
+    }
+    drawBall(40, sliderClickPosition.x + 50, 250 );
   }
   else {
+    sliderClickPosition.y =  (slider.speed / 20) * (Date.now() - animationStartTimeStamp) % 800;
+    if (sliderClickPosition.y > 400) {
+      sliderClickPosition.y = 800 - sliderClickPosition.y;
+    }
+    drawBall(40, sliderClickPosition.x + 50, 250 );
+    drawBall(40, 250, 50 + sliderClickPosition.y);
   }
 }
 
@@ -209,6 +220,14 @@ function newGame() {
   drawStatusText("Click to Start!","blue");
   game = {"score":0, "level":0, "shotsLeft": 5, "shotsMade": 0, "shotsMissed":0};    //reset the game
   drawStatusBar();
+}
+
+function newTurn() {
+  currentSliderX = true;
+  shotanimation = {"type":"missed","curved":false,"direction":"hardleft"};
+  sliderClickPosition = {"x":0,"y":0};
+  animationStartTimeStamp = Date.now();
+  animationTimerID = setInterval(drawSliderAnim, 1000 / frameRate);   
 }
 
 function writeGameScreen() {
