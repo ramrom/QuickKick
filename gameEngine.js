@@ -124,8 +124,8 @@ function canvasMouseClickHandler(e) {
       break;
 
     case "newgame":
-      newTurn();
       gameState = "inputsliders"; 
+      newTurn();
       break;
 
     case "shotanimation":
@@ -143,9 +143,11 @@ function canvasMouseClickHandler(e) {
    
     case "inputsliders":
       if (currentSliderX == true) {
+   	calculateSliderPosition("x");
         currentSliderX = false;
       }
       else {
+   	calculateSliderPosition("y");
         clearInterval(animationTimerID);
         gameState = "shotanimation";
       }
@@ -183,7 +185,7 @@ function drawMissAnim() {
     clearInterval(animationTimerID);
     drawSliderBars();
     gameState = "inputsliders";
-    newTurn();
+    processGameState();
   }
   //keyword = keywords[Math.floor(Math.random()*keywords.length)];
   //drawStatusText("You Missed!","red");
@@ -197,17 +199,11 @@ function drawSliderAnim() {
   $("#sliderX").attr("value",sliderClickPosition.x);
   $("#sliderY").attr("value",sliderClickPosition.y);
   if (currentSliderX == true) { 
-    sliderClickPosition.x =  (slider.speed / 20) * (Date.now() - animationStartTimeStamp) % 800;
-    if (sliderClickPosition.x > 400) {
-      sliderClickPosition.x = 800 - sliderClickPosition.x;
-    }
+    calculateSliderPosition("x");
     drawBall(40, sliderClickPosition.x + 50, 250 );
   }
   else {
-    sliderClickPosition.y =  (slider.speed / 20) * (Date.now() - animationStartTimeStamp) % 800;
-    if (sliderClickPosition.y > 400) {
-      sliderClickPosition.y = 800 - sliderClickPosition.y;
-    }
+    calculateSliderPosition("y");
     drawBall(40, sliderClickPosition.x + 50, 250 );
     drawBall(40, 250, 50 + sliderClickPosition.y);
   }
@@ -220,6 +216,26 @@ function newGame() {
   drawStatusText("Click to Start!","blue");
   game = {"score":0, "level":0, "shotsLeft": 5, "shotsMade": 0, "shotsMissed":0};    //reset the game
   drawStatusBar();
+}
+
+function calculateSliderPosition(axis) {
+  sliderClickPosition[axis] =  (slider.speed / 20) * (Date.now() - animationStartTimeStamp) % 800;
+  if (sliderClickPosition[axis] > 400) {
+    sliderClickPosition[axis] = 800 - sliderClickPosition[axis];
+  }
+}
+
+function slidersHit() {
+  if (Math.abs(200 - sliderClickPosition.x) < slider.precision && Math.abs(200 - sliderClickPosition.y) < slider.precision) {
+    return true;
+  } 
+  return false;
+}
+
+function processGameState() {
+  if (slidersHit()) {
+  }
+  newTurn();
 }
 
 function newTurn() {

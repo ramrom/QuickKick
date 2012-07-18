@@ -163,14 +163,22 @@ function drawSliderBars() {
   ctx.strokeStyle = "red";
   ctx.lineWidth = 15;
   ctx.arc(250,250,slider.precision,0, 2 * Math.PI, false);
+  ctx.closePath();
   ctx.stroke();
+  ctx.beginPath();
+  ctx.arc(250,250,10,2 * Math.PI, false);
+  ctx.closePath();
+  ctx.stroke();
+  //ctx.fill();
 
   ctx.globalAlpha = 1;
-  for (var i=0;i<4;i++){  
-    ctx.beginPath();  
+  for (var i=0;i<4;i++) {  
+    ctx.translate(250,250);
     ctx.rotate(Math.PI/2);  
-    ctx.moveTo(250 + 3 * slider.precision/4,250);  
-    ctx.lineTo(250 + 5 * slider.precision/4,250);  
+    ctx.beginPath();  
+    ctx.moveTo(250 + 3 * slider.precision/5,250);  
+    ctx.lineTo(250 + 7 * slider.precision/5,250);  
+    ctx.closePath();
     ctx.stroke();  
   }  
   ctx.restore();
