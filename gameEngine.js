@@ -1,7 +1,7 @@
 //this is the game engine
-var game = {"score":0, "level":0, "shotsLeft": 5, "shotsMade": 0, "shotsMissed":0};
+var game = {"score":0, "level":0, "shotsLeft": 5, "shotsMade": 0};
 var gameState = "homescreen";
-var shotanimation = {"type":"missed","curved":false,"direction":"hardleft"};
+var shotanimation = {"type":"miss","curved":false,"direction":"hardleft"};
 
 var slider={"speed":10,"precision":60};
 var currentSliderX = true;
@@ -130,9 +130,9 @@ function canvasMouseClickHandler(e) {
 
     case "shotanimation":
       var randomPosition = positionKeyWords[Math.floor(Math.random() * positionKeyWords.length)]; 
-      shotanimation = {"type":"missed","curved":false,"direction":randomPosition};
+      shotanimation.direction = randomPosition;
       animationStartTimeStamp = Date.now();
-      if (shotanimation.type == "missed") {
+      if (shotanimation.type == "miss") {
         animationTimerID = setInterval(drawMissAnim, 1000 / frameRate);   
       }
       else if (shotanimation.type == "goal") {
@@ -163,7 +163,26 @@ function canvasMouseClickHandler(e) {
 }
 
 function drawGoalAnim() {
-    
+  frameCount++;
+  drawGameScreen();
+  drawStatusBar();
+  var elapsedTime = Date.now() - animationStartTimeStamp; 
+  if (elapsedTime < ballShotTimeToGoal) {
+    drawGoalie(shotanimation.direction,goalieStartingPosition.x,goalieStartingPosition.y);
+    var ballXOffset = (elapsedTime / ballShotTimeToGoal) * (ballStartingPosition.x - goalieEndingPositions[shotanimation.direction].x); 
+    var ballYOffset = (elapsedTime / ballShotTimeToGoal) * (ballStartingPosition.y - goalieEndingPositions[shotanimation.direction].y); 
+    var ballSize = 100 - (75 * elapsedTime/ballShotTimeToGoal);
+    drawBall(ballSize,ballStartingPosition.x - ballXOffset, ballStartingPosition.y - ballYOffset);
+  }
+  else if (elapsedTime > ballShotTimeToGoal && elapsedTime < totalAnimationDuration) {
+    drawGoalie(shotanimation.direction,goalieStartingPosition.x,goalieStartingPosition.y);
+  }
+  else {
+    clearInterval(animationTimerID);
+    processGameStateAfterShot();
+  }
+  //keyword = keywords[Math.floor(Math.random()*keywords.length)];
+  //drawStatusText("GOAL!","green");
 }
 
 function drawMissAnim() {
@@ -183,9 +202,7 @@ function drawMissAnim() {
   }
   else {
     clearInterval(animationTimerID);
-    drawSliderBars();
-    gameState = "inputsliders";
-    processGameState();
+    processGameStateAfterShot();
   }
   //keyword = keywords[Math.floor(Math.random()*keywords.length)];
   //drawStatusText("You Missed!","red");
@@ -194,8 +211,8 @@ function drawMissAnim() {
 function drawSliderAnim() {
   frameCount++;
   drawGameScreen();
-  drawStatusBar();
   drawSliderBars();
+  drawStatusBar();
   $("#sliderX").attr("value",sliderClickPosition.x);
   $("#sliderY").attr("value",sliderClickPosition.y);
   if (currentSliderX == true) { 
@@ -214,7 +231,8 @@ function newGame() {
   drawGoalie("sitting",goalieStartingPosition.x,goalieStartingPosition.y);
   drawBall(100,ballStartingPosition.x,ballStartingPosition.y);
   drawStatusText("Click to Start!","blue");
-  game = {"score":0, "level":0, "shotsLeft": 5, "shotsMade": 0, "shotsMissed":0};    //reset the game
+  game = {"score":0, "level":0, "shotsLeft": 5, "shotsMade": 0};    //reset the game
+  slider={"speed":10,"precision":60};
   drawStatusBar();
 }
 
@@ -225,22 +243,62 @@ function calculateSliderPosition(axis) {
   }
 }
 
-function slidersHit() {
+function didSlidersHit() {
   if (Math.abs(200 - sliderClickPosition.x) < slider.precision && Math.abs(200 - sliderClickPosition.y) < slider.precision) {
     return true;
   } 
   return false;
 }
 
-function processGameState() {
-  if (slidersHit()) {
+function calculateScore() {
+  //the closer the timing was to the center the higher the score
+  xdiff = Math.abs(200 - sliderClickPosition.x);
+  ydiff = Math.abs(200 - sliderClickPosition.y);
+  score = 0;
+  if (game.level < 2) {
+    score = 100;
+  }
+  else if (game.level < 4) {
+    score = 200;
+  }
+  else {
+    score = 400;
+  }
+  return score;
+}
+
+function processGameStateAfterShot() {
+  game.shotsLeft--;
+  if (didSlidersHit()) {
+    game.shotsMade++;
+    game.score=game.score + calculateScore();
+    shotanimation.type = "goal";
+  }
+  else {
+    shotanimation.type = "miss";
+  }
+  if (game.shotsLeft == 0) {
+    if (game.shotsMade > 2) {
+      game.level++;
+      game.shotsMade = 0;
+      game.shotsLeft = 5;
+      slider.speed++;
+      slider.precision--;
+    }
+    else {
+      writeEndScreen();
+      gameState = "endscreen";
+      return;
+    }
   }
   newTurn();
 }
 
 function newTurn() {
+  drawSliderBars();
+  gameState = "inputsliders";
   currentSliderX = true;
-  shotanimation = {"type":"missed","curved":false,"direction":"hardleft"};
+  shotanimation = {"type":"miss","curved":false,"direction":"hardleft"};
   sliderClickPosition = {"x":0,"y":0};
   animationStartTimeStamp = Date.now();
   animationTimerID = setInterval(drawSliderAnim, 1000 / frameRate);   
