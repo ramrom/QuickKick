@@ -28,8 +28,10 @@ goalieJumpSoftRight.src = 'images/Goalie_JumpingRight.png';
 ball.src = 'images/Ball_01.png';  
 
 var frameRate = 40;            //target frames per second
-var totalAnimationDuration = 700;     //total length in miliseconds of kick animations
 var ballShotTimeToGoal = 500;
+var ballTimeToDrop = ballShotTimeToGoal/4;
+var shotEndDelay = 1000;
+var totalAnimationDuration = ballShotTimeToGoal + ballTimeToDrop + shotEndDelay; //total length in miliseconds of kick animations
 var animationTimerID=0;
 var animationTimerID2=0;
 var frameCount = 1;
@@ -76,12 +78,17 @@ function drawGoalie(posture,Xpos,Ypos) {
 }
 
 //size in pixels, X and Y center positions of ball
-function drawBall(size,Xpos,Ypos) {
+function drawBall(size,Xpos,Ypos,rotate) {
   var canv = document.getElementById('gamecanvas');  
   var ctx = canv.getContext('2d');  
   ctx.save();
   ctx.translate(Xpos,Ypos);
-  ctx.rotate(Math.PI * 8 * frameCount / frameRate);
+  if (typeof rotate == "undefined") {
+    rotate = true;
+  }
+  if (rotate) {
+    ctx.rotate(Math.PI * 8 * frameCount / frameRate);
+  }
   ctx.drawImage(ball,-size/2,-size/2, size, size);  
   ctx.restore();  
 }
@@ -195,7 +202,7 @@ function drawStatusBar() {
  
   //draw the status texts
   ctx.font = "bold 18px sans-serif";
-  ctx.fillStyle = "blue";
+  ctx.fillStyle = "white";
   ctx.textAlign = "center";
   ctx.fillText("Score: " + game['score'],250,19); 
   ctx.textAlign = "left";
