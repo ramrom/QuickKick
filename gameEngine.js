@@ -3,7 +3,7 @@ var game = {"score":0, "level":1, "shotsLeft": 5, "shotsMade": 0};
 var gameState = "homescreen";
 var shotanimation = {"type":"miss","curved":false,"direction":"hardleft"};
 
-var slider={"speed":10,"precision":60};
+var slider={"speed":8,"precision":60};
 var currentSliderX = true;
 var sliderClickPosition={"x":0,"y":0};
 
@@ -258,7 +258,7 @@ function newGame() {
   drawBall(100,ballStartingPosition.x,ballStartingPosition.y);
   drawStatusText("Click to Start!","blue");
   game = {"score":0, "level":1, "shotsLeft": 5, "shotsMade": 0};    //reset the game
-  slider={"speed":10,"precision":60};
+  slider={"speed":8,"precision":60};
   drawStatusBar();
 }
 
@@ -280,7 +280,8 @@ function calculateScore() {
   //the closer the timing was to the center the higher the score
   xdiff = Math.abs(200 - sliderClickPosition.x);
   ydiff = Math.abs(200 - sliderClickPosition.y);
-  score = 0;
+  var scoreScalar = Math.sqrt(Math.abs((slider.precision - xdiff) * (slider.precision - ydiff) / (slider.precision * slider.precision)));
+  var score = 0;
   if (game.level < 3) {
     score = 100;
   }
@@ -290,7 +291,7 @@ function calculateScore() {
   else {
     score = 400;
   }
-  return score;
+  return Math.floor(score * scoreScalar);
 }
 
 function processGameStateAfterShot() {
