@@ -17,7 +17,6 @@ var endScreenPlayAgainButtonArea = {"x":135,"y":315,"width":165,"height":25};
 var endScreenHighScoresButtonArea = {"x":140,"y":353,"width":235,"height":25};
 
 
-
 // DEBUGGING FUNCTIONS
 function toggleDebugInfo() {
   if (debugInfoOn == false) {
@@ -168,27 +167,32 @@ function drawGoalAnim() {
   drawStatusBar();
   var elapsedTime = Date.now() - animationStartTimeStamp; 
   var ballSize = 100 - (75 * elapsedTime/ballShotTimeToGoal);
-   if (elapsedTime < 2*ballShotTimeToGoal/3) {
+   if (elapsedTime < 3*ballShotTimeToGoal/4) {
     drawGoalie("sitting",goalieStartingPosition.x, goalieStartingPosition.y);
     var ballXOffset = (elapsedTime / ballShotTimeToGoal) * (ballStartingPosition.x - goalieEndingPositions[shotanimation.direction].x); 
     var ballYOffset = (elapsedTime / ballShotTimeToGoal) * (ballStartingPosition.y - goalieEndingPositions[shotanimation.direction].y); 
     drawBall(ballSize,ballStartingPosition.x - ballXOffset, ballStartingPosition.y - ballYOffset);
   }
   else if (elapsedTime < ballShotTimeToGoal) {
-    var goalieXOffset = (elapsedTime / ballShotTimeToGoal) * (goalieStartingPosition.x - goalieEndingPositions[shotanimation.direction].x); 
-    var goalieYOffset = (elapsedTime / ballShotTimeToGoal) * (goalieStartingPosition.y - goalieEndingPositions[shotanimation.direction].y); 
+    
+    var goalieXOffset = ((elapsedTime - 3*ballShotTimeToGoal/4) / ballShotTimeToGoal) * (goalieStartingPosition.x - goalieEndingPositions[shotanimation.direction].x); 
+    var goalieYOffset = ((elapsedTime - 3*ballShotTimeToGoal/4) / ballShotTimeToGoal) * (goalieStartingPosition.y - goalieEndingPositions[shotanimation.direction].y); 
     drawGoalie(shotanimation.direction,goalieStartingPosition.x - goalieXOffset, goalieStartingPosition.y - goalieYOffset);
     var ballXOffset = (elapsedTime / ballShotTimeToGoal) * (ballStartingPosition.x - goalieEndingPositions[shotanimation.direction].x); 
     var ballYOffset = (elapsedTime / ballShotTimeToGoal) * (ballStartingPosition.y - goalieEndingPositions[shotanimation.direction].y); 
     drawBall(ballSize,ballStartingPosition.x - ballXOffset, ballStartingPosition.y - ballYOffset);
   }
   else if (elapsedTime < (ballShotTimeToGoal + ballTimeToDrop)) {
-    drawGoalie("up",goalieEndingPositions[shotanimation.direction].x,goalieEndingPositions[shotanimation.direction].y + 50 * (elapsedTime - ballShotTimeToGoal)/(totalAnimationDuration - ballShotTimeToGoal));
-    drawBall(25, goalieEndingPositions[shotanimation.direction].x, goalieEndingPositions[shotanimation.direction].y + 70 * (elapsedTime - ballShotTimeToGoal)/(totalAnimationDuration - ballShotTimeToGoal));
+    var goalieXOffset = ((ballShotTimeToGoal/4) / ballShotTimeToGoal) * (goalieStartingPosition.x - goalieEndingPositions[shotanimation.direction].x); 
+    var goalieYOffset = ((ballShotTimeToGoal/4) / ballShotTimeToGoal) * (goalieStartingPosition.y - goalieEndingPositions[shotanimation.direction].y); 
+    drawBall(25, goalieEndingPositions[shotanimation.direction].x, goalieEndingPositions[shotanimation.direction].y + 40 * (elapsedTime - ballShotTimeToGoal)/(totalAnimationDuration - ballShotTimeToGoal));
+    drawGoalie("up", goalieStartingPosition.x - goalieXOffset, goalieStartingPosition.y - goalieYOffset + 30 * (elapsedTime - ballShotTimeToGoal)/(totalAnimationDuration - ballShotTimeToGoal));
   }
   else if (elapsedTime < totalAnimationDuration) {
-    drawGoalie("sitting",goalieEndingPositions[shotanimation.direction].x,goalieEndingPositions[shotanimation.direction].y + 50);
-    drawBall(25, goalieEndingPositions[shotanimation.direction].x, goalieEndingPositions[shotanimation.direction].y + 70, false);
+    var goalieXOffset = ((ballShotTimeToGoal/4) / ballShotTimeToGoal) * (goalieStartingPosition.x - goalieEndingPositions[shotanimation.direction].x); 
+    var goalieYOffset = ((ballShotTimeToGoal/4) / ballShotTimeToGoal) * (goalieStartingPosition.y - goalieEndingPositions[shotanimation.direction].y); 
+    drawBall(25, goalieEndingPositions[shotanimation.direction].x, goalieEndingPositions[shotanimation.direction].y + 40, false);
+    drawGoalie("sitting", goalieStartingPosition.x - goalieXOffset, goalieStartingPosition.y - goalieYOffset + 30);
     drawStatusText("GOAL!","green");
   }
   else {
