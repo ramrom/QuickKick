@@ -120,7 +120,6 @@ function canvasMouseClickHandler(e) {
     case "highscoresscreen":
       drawHomeScreen();
       gameState = "homescreen"; 
-      gameIntroSnd.play(); 
       break;
 
     case "newgame":
@@ -152,9 +151,13 @@ function canvasMouseClickHandler(e) {
    	calculateSliderPosition("y");
         clearInterval(animationTimerID);
         gameState = "shotanimation";
+        processGameStateAfterShot();
       }
       //(currentSliderX == true) ? currentSliderX=false : gameState = "shotanimation"; clearInterval(animationTimerID);
       break;
+
+    case "gamepaused":
+      break; 
 
     case "newlevel":
       currentSliderX=true;
@@ -200,7 +203,7 @@ function drawGoalAnim() {
   }
   else {
     clearInterval(animationTimerID);
-    processGameStateAfterShot();
+    newTurn();
   }
   //keyword = keywords[Math.floor(Math.random()*keywords.length)];
 }
@@ -236,7 +239,7 @@ function drawMissAnim() {
   }
   else {
     clearInterval(animationTimerID);
-    processGameStateAfterShot();
+    newTurn();
   }
   //keyword = keywords[Math.floor(Math.random()*keywords.length)];
 }
@@ -322,11 +325,12 @@ function processGameStateAfterShot() {
     }
     else {
       writeEndScreen();
+      gameIntroSnd.currentTime=0;
+      gameIntroSnd.play();
       gameState = "endscreen";
       return;
     }
   }
-  newTurn();
 }
 
 function newTurn() {
