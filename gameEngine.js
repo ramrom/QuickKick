@@ -120,6 +120,7 @@ function canvasMouseClickHandler(e) {
     case "highscoresscreen":
       drawHomeScreen();
       gameState = "homescreen"; 
+      gameIntroSnd.play(); 
       break;
 
     case "newgame":
@@ -133,9 +134,11 @@ function canvasMouseClickHandler(e) {
       animationStartTimeStamp = Date.now();
       if (shotanimation.type == "miss") {
         animationTimerID = setInterval(drawMissAnim, 1000 / frameRate);   
+        missSnd.play();
       }
       else if (shotanimation.type == "goal") {
         animationTimerID = setInterval(drawGoalAnim, 1000 / frameRate);   
+        cheerSnd.play();
       }
       gameState = "inanimation"; 
       break;
@@ -257,6 +260,7 @@ function drawSliderAnim() {
 }
 
 function newGame() {
+  gameIntroSnd.pause();
   drawGameScreen();
   drawGoalie("sitting",goalieStartingPosition.x,goalieStartingPosition.y);
   drawBall(100,ballStartingPosition.x,ballStartingPosition.y);
@@ -326,6 +330,10 @@ function processGameStateAfterShot() {
 }
 
 function newTurn() {
+  cheerSnd.pause();
+  cheerSnd.currentTime=0;
+  missSnd.pause();
+  missSnd.currentTime=0;
   drawSliderBars();
   gameState = "inputsliders";
   currentSliderX = true;

@@ -14,6 +14,7 @@ function init() {
   $("#gamecanvas").click(function(event){canvasMouseClickHandler(event);});
   debugWriteIntervalID = setInterval(writeDebugInfo, 1000/frameRate);
   document.onmousemove = writeMousePosition;
+  gameIntroSnd.play();
 } 
 
 /*    need to find out why drawHomeScreenhere doesn't work right

@@ -27,6 +27,13 @@ goalieJumpSoftLeft.src = 'images/Goalie_JumpingLeft.png';
 goalieJumpSoftRight.src = 'images/Goalie_JumpingRight.png';  
 ball.src = 'images/Ball_01.png';  
 
+//preload the sounds
+var cheerSnd = new Audio("sounds/cheering_crowd.mp3");
+var missSnd = new Audio("sounds/crowd_miss.mp3");
+var gameIntroSnd = new Audio("sounds/main_game_music.mp3");
+gameIntroSnd.loop = true;
+
+// other important variables
 var frameRate = 40;            //target frames per second
 var ballShotTimeToGoal = 500;
 var ballTimeToDrop = ballShotTimeToGoal/4;
