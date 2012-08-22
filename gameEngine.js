@@ -127,6 +127,7 @@ function canvasMouseClickHandler(e) {
       newTurn();
       break;
 
+/*
     case "shotanimation":
       var randomPosition = positionKeyWords[Math.floor(Math.random() * positionKeyWords.length)]; 
       shotanimation.direction = randomPosition;
@@ -141,6 +142,7 @@ function canvasMouseClickHandler(e) {
       }
       gameState = "inanimation"; 
       break;
+*/
    
     case "inputsliders":
       if (currentSliderX == true) {
@@ -150,13 +152,23 @@ function canvasMouseClickHandler(e) {
       else {
    	calculateSliderPosition("y");
         clearInterval(animationTimerID);
-        gameState = "shotanimation";
-        processGameStateAfterShot();
+        processScoreAfterShot();
+        if (gameState != "endscreen") {
+          animationTimerID2 = setTimeout(drawKickAnimation,sliderToAnimDelay);
+          gameState = "sliderToKickAnimDelay";
+        }
       }
       //(currentSliderX == true) ? currentSliderX=false : gameState = "shotanimation"; clearInterval(animationTimerID);
       break;
 
-    case "gamepaused":
+    case "inanimation":
+      clearInterval(animationTimerID);
+      newTurn();      
+      break;
+
+    case "sliderToKickAnimDelay":
+      clearInterval(animationTimerID2);
+      drawKickAnimation();
       break; 
 
     case "newlevel":
@@ -262,6 +274,21 @@ function drawSliderAnim() {
   }
 }
 
+function drawKickAnimation() {
+  var randomPosition = positionKeyWords[Math.floor(Math.random() * positionKeyWords.length)]; 
+  shotanimation.direction = randomPosition;
+  animationStartTimeStamp = Date.now();
+  if (shotanimation.type == "miss") {
+    animationTimerID = setInterval(drawMissAnim, 1000 / frameRate);   
+    missSnd.play();
+  }
+  else if (shotanimation.type == "goal") {
+    animationTimerID = setInterval(drawGoalAnim, 1000 / frameRate);   
+    cheerSnd.play();
+  }
+  gameState = "inanimation"; 
+}
+
 function newGame() {
   gameIntroSnd.pause();
   drawGameScreen();
@@ -305,7 +332,7 @@ function calculateScore() {
   return Math.floor(score * scoreScalar);
 }
 
-function processGameStateAfterShot() {
+function processScoreAfterShot() {
   game.shotsLeft--;
   if (didSlidersHit()) {
     game.shotsMade++;
