@@ -28,9 +28,18 @@ goalieJumpSoftRight.src = 'images/Goalie_JumpingRight.png';
 ball.src = 'images/Ball_01.png';  
 
 //preload the sounds
-var cheerSnd = new Audio("sounds/cheering_crowd.mp3");
-var missSnd = new Audio("sounds/crowd_miss.mp3");
-var gameIntroSnd = new Audio("sounds/main_game_music.mp3");
+if (navigator.appVersion.indexOf("firefox") != -1) {      //mozilla doesn't support mp3
+  var cheerSnd = new Audio("sounds/cheering_crowd.ogg");
+  var missSnd = new Audio("sounds/crowd_miss.ogg");
+  var gameIntroSnd = new Audio("sounds/main_game_music.ogg");
+  //alert("using ogg " + navigator.appVersion);
+}
+else {
+  var cheerSnd = new Audio("sounds/cheering_crowd.mp3");
+  var missSnd = new Audio("sounds/crowd_miss.mp3");
+  var gameIntroSnd = new Audio("sounds/main_game_music.mp3");
+}
+
 gameIntroSnd.loop = true;
 
 // other important variables
