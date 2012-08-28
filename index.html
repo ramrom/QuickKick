@@ -15,6 +15,7 @@ function init() {
   debugWriteIntervalID = setInterval(writeDebugInfo, 1000/frameRate);
   document.onmousemove = writeMousePosition;
   gameIntroSnd.play();
+  writeUserInputFields(); 
 } 
 
 /*    need to find out why drawHomeScreenhere doesn't work right
@@ -31,7 +32,7 @@ $(document).ready(function(){
 <body onload="init()">
 
 <canvas id="gamecanvas" width="500" height="500">You're browser doesn't support canvas</canvas> 
-
+<div id="user_txt_boxes"> </div>
 <form>
 <input type="button" id="debugbutton" value="Toggle Debugging Info" onClick="toggleDebugInfo()">
 </form>

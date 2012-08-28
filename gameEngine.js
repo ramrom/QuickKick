@@ -97,11 +97,13 @@ function canvasMouseClickHandler(e) {
   switch(gameState) {
     case "homescreen":
       if (hitHomePlayButton(e)) {
+        removeUserInputFields();
         newGame();
         gameState = "newgame";
       }
       else if (hitHomeViewHighScoresButton(e)) {
         writeHighScores();
+	removeUserInputFields();
         gameState = "highscoresscreen";  
       } 
       break;
@@ -120,6 +122,7 @@ function canvasMouseClickHandler(e) {
     case "highscoresscreen":
       drawHomeScreen();
       gameState = "homescreen"; 
+      writeUserInputFields();
       break;
 
     case "newgame":

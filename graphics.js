@@ -230,4 +230,14 @@ function drawStatusBar() {
   ctx.restore();
 }
 
+function writeUserInputFields() {
+  $("#user_txt_boxes").append('<input type="text" id="firstname" style="position: absolute; left: 30px; top: 350px" size="10">');
+  $("#user_txt_boxes").append('<input type="text" id="lastname" style="position: absolute; left: 120px; top: 350px" size="10">');
+  $("#user_txt_boxes").append('<input type="text" id="email" style="position: absolute; left: 30px; top: 390px" size="20">');
+}
 
+function removeUserInputFields() {
+  $("#firstname").remove();
+  $("#lastname").remove();
+  $("#email").remove();
+}
