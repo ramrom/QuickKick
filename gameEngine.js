@@ -2,6 +2,7 @@
 var game = {"score":0, "level":1, "shotsLeft": 5, "shotsMade": 0};
 var gameState = "homescreen";
 var shotanimation = {"type":"miss","curved":false,"direction":"hardleft"};
+var playerInfo = {"firstname":null,"lastname":null,"email":null};
 
 var slider={"speed":8,"precision":60};
 var currentSliderX = true;
