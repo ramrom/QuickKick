@@ -28,7 +28,8 @@ goalieJumpSoftRight.src = 'images/Goalie_JumpingRight.png';
 ball.src = 'images/Ball_01.png';  
 
 //preload the sounds
-if (navigator.appVersion.indexOf("firefox") != -1) {      //mozilla doesn't support mp3
+//if (navigator.appVersion.indexOf("firefox") != -1) {      //mozilla doesn't support mp3
+if ($.browser.mozilla) {      //mozilla doesn't support mp3
   var cheerSnd = new Audio("sounds/cheering_crowd.ogg");
   var missSnd = new Audio("sounds/crowd_miss.ogg");
   var gameIntroSnd = new Audio("sounds/main_game_music.ogg");
