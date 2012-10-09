@@ -132,6 +132,19 @@ function drawHomeScreen() {
   ctx.clearRect(0,0,500,500); // clear canvas  
   //canv.removeEventListener('click',drawHomeScreen,false);
   ctx.drawImage(homeScreen,0,0);
+
+  ctx.font = "bold 12px sans-serif";
+  //ctx.textAlign = "center";
+  ctx.fillStyle = "red";
+  //ctx.fillText("Fill in your details to enter for a chance to win 100 pounds each month for playing QuickKick!",25,330); 
+  ctx.fillText("Fill in your details to enter for a chance to",15,320); 
+  ctx.fillText("win 100 pounds each month for playing QuickKick!",15,333); 
+
+  ctx.font = "bold 10px sans-serif";
+  ctx.fillStyle = "black";
+  ctx.fillText("First Name",25,362); 
+  ctx.fillText("Last Name",130,362); 
+  ctx.fillText("E-mail",80,395); 
   //canv.addEventListener('click',drawmain,false);
 }
 
@@ -231,10 +244,19 @@ function drawStatusBar() {
   ctx.restore();
 }
 
+function openTermsAndConditions(){
+  window.open("http://www.quickquid.co.uk/QuickKickRules","newwindow");
+  return false;
+}
+
 function writeUserInputFields() {
-  $("#user_txt_boxes").append('<input type="text" id="firstname" style="position: absolute; left: 30px; top: 350px" size="10">');
-  $("#user_txt_boxes").append('<input type="text" id="lastname" style="position: absolute; left: 120px; top: 350px" size="10">');
-  $("#user_txt_boxes").append('<input type="text" id="email" style="position: absolute; left: 30px; top: 390px" size="20">');
+  $("#user_txt_boxes").append('<input type="checkbox" id="agree_to_terms" style="position: absolute; left: 20px; top: 343px" size="20">');
+  $("#user_txt_boxes").append('<a href="" onclick="openTermsAndConditions()" id="agree_to_terms_link" style="position: absolute; left: 40px; top: 343px" size="10">Agree to terms and conditions</a>');
+  $("#user_txt_boxes").append('<input type="text" id="firstname" style="position: absolute; left: 20px; top: 370px" size="10">');
+  $("#user_txt_boxes").append('<input type="text" id="lastname" style="position: absolute; left: 120px; top: 370px" size="10">');
+  $("#user_txt_boxes").append('<input type="text" id="email" style="position: absolute; left: 30px; top: 403px" size="20">');
+
+  if (playerInfo.agree_to_terms) { $("#agree_to_terms").attr('checked','checked'); }
   $("#firstname").val(playerInfo.firstname);
   $("#lastname").val(playerInfo.lastname);
   $("#email").val(playerInfo.email);
@@ -244,7 +266,10 @@ function removeUserInputFields() {
   playerInfo.firstname = $('#firstname').val();
   playerInfo.lastname = $('#lastname').val();
   playerInfo.email = $('#email').val();
+  playerInfo.agree_to_terms = $('#agree_to_terms').is(':checked');
   $("#firstname").remove();
   $("#lastname").remove();
   $("#email").remove();
+  $("#agree_to_terms").remove();
+  $("#agree_to_terms_link").remove();
 }
