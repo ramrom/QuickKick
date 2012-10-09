@@ -123,7 +123,6 @@ function canvasMouseClickHandler(e) {
     case "highscoresscreen":
       drawHomeScreen();
       gameState = "homescreen"; 
-      writeUserInputFields();
       break;
 
     case "newgame":

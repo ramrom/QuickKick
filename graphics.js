@@ -132,6 +132,7 @@ function drawHomeScreen() {
   ctx.clearRect(0,0,500,500); // clear canvas  
   //canv.removeEventListener('click',drawHomeScreen,false);
   ctx.drawImage(homeScreen,0,0);
+  writeUserInputFields(); 
 
   ctx.font = "bold 12px sans-serif";
   //ctx.textAlign = "center";
