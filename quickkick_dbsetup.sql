@@ -7,12 +7,29 @@ id 		serial 		PRIMARY KEY,
 first_name 	varchar(15),
 last_name 	varchar(15),
 email 		varchar(30)     NOT NULL,
-score		integer
+score		integer,
+agree_to_terms  boolean
 );
 
-CREATE USER enovagameuser LOGIN;
+INSERT into `quickkick` (first_name,last_name,email,score,agree_to_terms) values ('John','Doe','jdoe@test.com',0,false);  
+INSERT into `quickkick` (first_name,last_name,email,score,agree_to_terms) values ('John','Doe','jdoe@test.com',0,false);  
+INSERT into `quickkick` (first_name,last_name,email,score,agree_to_terms) values ('John','Doe','jdoe@test.com',0,false);  
+INSERT into `quickkick` (first_name,last_name,email,score,agree_to_terms) values ('John','Doe','jdoe@test.com',0,false);  
+INSERT into `quickkick` (first_name,last_name,email,score,agree_to_terms) values ('John','Doe','jdoe@test.com',0,false);  
+INSERT into `quickkick` (first_name,last_name,email,score,agree_to_terms) values ('John','Doe','jdoe@test.com',0,false);  
+INSERT into `quickkick` (first_name,last_name,email,score,agree_to_terms) values ('John','Doe','jdoe@test.com',0,false);  
+INSERT into `quickkick` (first_name,last_name,email,score,agree_to_terms) values ('John','Doe','jdoe@test.com',0,false);  
+INSERT into `quickkick` (first_name,last_name,email,score,agree_to_terms) values ('John','Doe','jdoe@test.com',0,false);  
+INSERT into `quickkick` (first_name,last_name,email,score,agree_to_terms) values ('John','Doe','jdoe@test.com',0,false);  
+INSERT into `quickkick` (first_name,last_name,email,score,agree_to_terms) values ('John','Doe','jdoe@test.com',0,false);  
+INSERT into `quickkick` (first_name,last_name,email,score,agree_to_terms) values ('John','Doe','jdoe@test.com',0,false);  
+INSERT into `quickkick` (first_name,last_name,email,score,agree_to_terms) values ('John','Doe','jdoe@test.com',0,false);  
+INSERT into `quickkick` (first_name,last_name,email,score,agree_to_terms) values ('John','Doe','jdoe@test.com',0,false);  
+INSERT into `quickkick` (first_name,last_name,email,score,agree_to_terms) values ('John','Doe','jdoe@test.com',0,false);  
 
-GRANT USAGE ON SCHEMA enovagames TO enovagameuser;
-GRANT ALL ON TABLE enovagames.quickkick TO enovagameuser;
+CREATE USER enovagameuser;
+
+GRANT USAGE ON enovagames TO enovagameuser;
+#GRANT ALL ON TABLE enovagames.quickkick TO enovagameuser;
 
 COMMIT;
