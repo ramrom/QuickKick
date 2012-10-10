@@ -18,7 +18,7 @@ var goalieJumpSoftLeft = new Image();
 homeScreen.src = 'images/HomeScreen.png';  
 gameScreen.src = 'images/GameScreen.png';  
 endScreen.src = 'images/EndScreen.png';  
-highScoreScreen.src = 'images/HighScoreScreen_01.png';  
+highScoreScreen.src = 'images/HighScoreScreen_02.png';  
 goalieReadyPosition.src = 'images/Goalie_Sitting.png';  
 goalieJumpUp.src = 'images/Goalie_JumpingUp.png';  
 goalieJumpHardRight.src = 'images/Goalie_Jumping_HardRight.png';  
@@ -111,16 +111,17 @@ function drawBall(size,Xpos,Ypos,rotate) {
   ctx.restore();  
 }
 
-function drawStatusText(message,color,xposition,yposition,size,fontstyle) {
+function drawStatusText(message,color,xposition,yposition,size,fontstyle,alignment) {
   if(typeof(color)==='undefined') color = 'black';
   if(typeof(xposition)==='undefined') xposition = 250;
   if(typeof(yposition)==='undefined') yposition = 250;
   if(typeof(size)==='undefined') size = 35;
   if(typeof(fontstyle)==='undefined') fontstyle = 'sans-serif';
+  if(typeof(alignment)==='undefined') alignment = 'center';
   var canv = document.getElementById('gamecanvas');  
   var ctx = canv.getContext('2d');  
   ctx.font = "bold " + size + "px " + fontstyle;
-  ctx.textAlign = "center";
+  ctx.textAlign = alignment;
   ctx.fillStyle = color;
   ctx.fillText(message,xposition,yposition); 
 }
@@ -164,6 +165,17 @@ function drawHighScoreScreen() {
   var canv = document.getElementById('gamecanvas');  
   var ctx = canv.getContext('2d');  
   ctx.drawImage(highScoreScreen,0,0);
+  drawHighScores();
+}
+
+function drawHighScores() {
+  drawStatusText(highScores[0].name,"black",160,150,18,'sans-serif','left');
+  drawStatusText(highScores[0].score + " pts","black",350,150,18,'sans-serif','right');
+  for (var i=1;i<15;i++) {
+    drawStatusText(i+".","red",137,170+14*i,13,'sans-serif','left');
+    drawStatusText(highScores[i].name,"black",160,170+14*i,14,'sans-serif','left');
+    drawStatusText(highScores[i].score + " pts","black",350,170+14*i,14,'sans-serif','right');
+  }
 }
 
 function drawSliderBars() {
