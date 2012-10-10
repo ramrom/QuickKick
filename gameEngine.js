@@ -137,23 +137,6 @@ function canvasMouseClickHandler(e) {
       newTurn();
       break;
 
-/*
-    case "shotanimation":
-      var randomPosition = positionKeyWords[Math.floor(Math.random() * positionKeyWords.length)]; 
-      shotanimation.direction = randomPosition;
-      animationStartTimeStamp = Date.now();
-      if (shotanimation.type == "miss") {
-        animationTimerID = setInterval(drawMissAnim, 1000 / frameRate);   
-        missSnd.play();
-      }
-      else if (shotanimation.type == "goal") {
-        animationTimerID = setInterval(drawGoalAnim, 1000 / frameRate);   
-        cheerSnd.play();
-      }
-      gameState = "inanimation"; 
-      break;
-*/
-   
     case "inputsliders":
       if (currentSliderX == true) {
    	calculateSliderPosition("x");
@@ -173,7 +156,12 @@ function canvasMouseClickHandler(e) {
 
     case "inanimation":
       clearInterval(animationTimerID);
-      newTurn();      
+      if (game.shotsLeft == 5) {
+        checkNewLevel();
+      }
+      else {
+        newTurn();      
+      }
       break;
 
     case "sliderToKickAnimDelay":
@@ -182,9 +170,8 @@ function canvasMouseClickHandler(e) {
       break; 
 
     case "newlevel":
-      currentSliderX=true;
-      gameState = "shotanimation";
-      clearInterval(animationTimerID);
+      clearInterval(animationTimerID2);
+      newTurn();
       break;
   }
 }
@@ -225,7 +212,7 @@ function drawGoalAnim() {
   }
   else {
     clearInterval(animationTimerID);
-    newTurn();
+    checkNewLevel();
   }
   //keyword = keywords[Math.floor(Math.random()*keywords.length)];
 }
@@ -261,7 +248,7 @@ function drawMissAnim() {
   }
   else {
     clearInterval(animationTimerID);
-    newTurn();
+    checkNewLevel();
   }
   //keyword = keywords[Math.floor(Math.random()*keywords.length)];
 }
@@ -308,6 +295,19 @@ function newGame() {
   game = {"score":0, "level":1, "shotsLeft": 5, "shotsMade": 0};    //reset the game
   slider={"speed":8,"precision":60};
   drawStatusBar();
+}
+
+function checkNewLevel()
+{
+  if (game.shotsLeft == 5) {
+    writeGameScreen();
+    drawStatusText("You advanced to Level " + game.level + "!",'green',250,250,35,'sans-serif'); 
+    animationTimerID2 = setTimeout(newTurn,sliderToAnimDelay*2);
+    gameState = "newlevel";  
+  }
+  else {
+    newTurn();
+  }
 }
 
 function calculateSliderPosition(axis) {
