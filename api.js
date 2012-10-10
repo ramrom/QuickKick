@@ -1,11 +1,8 @@
 //this is where we write the AJAX and JSON type requests and POSTS to server to store data
-var highScores = new Array();
-for (var i=0;i<15;i++) {
-  highScores[i] = {"name":"JDoe","score":"10"};
-}
 
 function sendUserInfo() {
  //retrive high scores and store in highScores array
+  var playerInfoEncoded = JSON.stringify(playerInfo);
   if (window.XMLHttpRequest) {
     xmlhttp=new XMLHttpRequest();
     xmlhttp.open("POST","add_user.php",true);

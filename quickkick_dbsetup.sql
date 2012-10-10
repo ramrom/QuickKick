@@ -11,21 +11,21 @@ score		integer,
 agree_to_terms  boolean
 );
 
-INSERT into `quickkick` (first_name,last_name,email,score,agree_to_terms) values ('John','Doe','jdoe@test.com',0,false);  
-INSERT into `quickkick` (first_name,last_name,email,score,agree_to_terms) values ('John','Doe','jdoe@test.com',0,false);  
-INSERT into `quickkick` (first_name,last_name,email,score,agree_to_terms) values ('John','Doe','jdoe@test.com',0,false);  
-INSERT into `quickkick` (first_name,last_name,email,score,agree_to_terms) values ('John','Doe','jdoe@test.com',0,false);  
-INSERT into `quickkick` (first_name,last_name,email,score,agree_to_terms) values ('John','Doe','jdoe@test.com',0,false);  
-INSERT into `quickkick` (first_name,last_name,email,score,agree_to_terms) values ('John','Doe','jdoe@test.com',0,false);  
-INSERT into `quickkick` (first_name,last_name,email,score,agree_to_terms) values ('John','Doe','jdoe@test.com',0,false);  
-INSERT into `quickkick` (first_name,last_name,email,score,agree_to_terms) values ('John','Doe','jdoe@test.com',0,false);  
-INSERT into `quickkick` (first_name,last_name,email,score,agree_to_terms) values ('John','Doe','jdoe@test.com',0,false);  
-INSERT into `quickkick` (first_name,last_name,email,score,agree_to_terms) values ('John','Doe','jdoe@test.com',0,false);  
-INSERT into `quickkick` (first_name,last_name,email,score,agree_to_terms) values ('John','Doe','jdoe@test.com',0,false);  
-INSERT into `quickkick` (first_name,last_name,email,score,agree_to_terms) values ('John','Doe','jdoe@test.com',0,false);  
-INSERT into `quickkick` (first_name,last_name,email,score,agree_to_terms) values ('John','Doe','jdoe@test.com',0,false);  
-INSERT into `quickkick` (first_name,last_name,email,score,agree_to_terms) values ('John','Doe','jdoe@test.com',0,false);  
-INSERT into `quickkick` (first_name,last_name,email,score,agree_to_terms) values ('John','Doe','jdoe@test.com',0,false);  
+INSERT into enovagames.quickkick (first_name,last_name,email,score,agree_to_terms) values ('John','Doe','jdoe@test.com',0,false);  
+INSERT into enovagames.quickkick (first_name,last_name,email,score,agree_to_terms) values ('John','Doe','jdoe@test.com',0,false);  
+INSERT into enovagames.quickkick (first_name,last_name,email,score,agree_to_terms) values ('John','Doe','jdoe@test.com',0,false);  
+INSERT into enovagames.quickkick (first_name,last_name,email,score,agree_to_terms) values ('John','Doe','jdoe@test.com',0,false);  
+INSERT into enovagames.quickkick (first_name,last_name,email,score,agree_to_terms) values ('John','Doe','jdoe@test.com',0,false);  
+INSERT into enovagames.quickkick (first_name,last_name,email,score,agree_to_terms) values ('John','Doe','jdoe@test.com',0,false);  
+INSERT into enovagames.quickkick (first_name,last_name,email,score,agree_to_terms) values ('John','Doe','jdoe@test.com',0,false);  
+INSERT into enovagames.quickkick (first_name,last_name,email,score,agree_to_terms) values ('John','Doe','jdoe@test.com',0,false);  
+INSERT into enovagames.quickkick (first_name,last_name,email,score,agree_to_terms) values ('John','Doe','jdoe@test.com',0,false);  
+INSERT into enovagames.quickkick (first_name,last_name,email,score,agree_to_terms) values ('John','Doe','jdoe@test.com',0,false);  
+INSERT into enovagames.quickkick (first_name,last_name,email,score,agree_to_terms) values ('John','Doe','jdoe@test.com',0,false);  
+INSERT into enovagames.quickkick (first_name,last_name,email,score,agree_to_terms) values ('John','Doe','jdoe@test.com',0,false);  
+INSERT into enovagames.quickkick (first_name,last_name,email,score,agree_to_terms) values ('John','Doe','jdoe@test.com',0,false);  
+INSERT into enovagames.quickkick (first_name,last_name,email,score,agree_to_terms) values ('John','Doe','jdoe@test.com',0,false);  
+INSERT into enovagames.quickkick (first_name,last_name,email,score,agree_to_terms) values ('John','Doe','jdoe@test.com',0,false);  
 
 CREATE USER enovagameuser;
 

@@ -111,13 +111,18 @@ function drawBall(size,Xpos,Ypos,rotate) {
   ctx.restore();  
 }
 
-function drawStatusText(message,color) {
+function drawStatusText(message,color,xposition,yposition,size,fontstyle) {
+  if(typeof(color)==='undefined') color = 'black';
+  if(typeof(xposition)==='undefined') xposition = 250;
+  if(typeof(yposition)==='undefined') yposition = 250;
+  if(typeof(size)==='undefined') size = 35;
+  if(typeof(fontstyle)==='undefined') fontstyle = 'sans-serif';
   var canv = document.getElementById('gamecanvas');  
   var ctx = canv.getContext('2d');  
-  ctx.font = "bold 35px sans-serif";
+  ctx.font = "bold " + size + "px " + fontstyle;
   ctx.textAlign = "center";
   ctx.fillStyle = color;
-  ctx.fillText(message,250,250); 
+  ctx.fillText(message,xposition,yposition); 
 }
 
 function drawGameScreen() {

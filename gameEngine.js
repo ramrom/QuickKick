@@ -1,8 +1,15 @@
 //this is the game engine
+
+//VARIABLES
 var game = {"score":0, "level":1, "shotsLeft": 5, "shotsMade": 0};
 var gameState = "homescreen";
 var shotanimation = {"type":"miss","curved":false,"direction":"hardleft"};
-var playerInfo = {"firstname":null,"lastname":null,"email":null, "agree_to_terms":false};
+var playerInfo = {"firstname":null,"lastname":null,"email":null, "score":0, "agree_to_terms":false};
+
+var highScores = new Array();
+for (var i=0;i<15;i++) {
+  highScores[i] = {"name":"JDoe","score":10};
+}
 
 var slider={"speed":8,"precision":60};
 var currentSliderX = true;
@@ -354,7 +361,13 @@ function processScoreAfterShot() {
       slider.precision--;
     }
     else {
+      playerInfo.score = game.score;
       writeEndScreen();
+      if (playerInfo.score > highScores[14].score) {
+        drawStatusText("CONGRATULATIONS!","red",250,40,40); 
+        drawStatusText("You have achieved a new high score!","red",250,65,25); 
+      }
+      drawStatusText("Score: " + game.score,"blue",250,100,30); 
       gameIntroSnd.currentTime=0;
       gameIntroSnd.play();
       gameState = "endscreen";
