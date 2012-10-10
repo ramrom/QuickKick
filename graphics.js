@@ -172,7 +172,7 @@ function drawHighScores() {
   drawStatusText(highScores[0].name,"black",160,150,18,'sans-serif','left');
   drawStatusText(highScores[0].score + " pts","black",350,150,18,'sans-serif','right');
   for (var i=1;i<15;i++) {
-    drawStatusText(i+".","red",137,170+14*i,13,'sans-serif','left');
+    drawStatusText((i+1)+".","red",137,170+14*i,13,'sans-serif','left');
     drawStatusText(highScores[i].name,"black",160,170+14*i,14,'sans-serif','left');
     drawStatusText(highScores[i].score + " pts","black",350,170+14*i,14,'sans-serif','right');
   }
