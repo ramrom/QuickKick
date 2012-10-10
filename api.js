@@ -10,6 +10,8 @@ function sendUserInfo() {
   if (window.XMLHttpRequest)
   {// code for IE7+, Firefox, Chrome, Opera, Safari
     xmlhttp=new XMLHttpRequest();
+    xmlhttp.open("PUT","add_user.php",true);
+    xmlhttp.send();
   }
 }
 
@@ -34,7 +36,8 @@ function retrieveHighScores()
         highScores[i].score = xmlhttp.responseText 
       }
     }
-  xmlhttp.open("GET","get_high_scores.php?q="+str,true);
+  xmlhttp.open("GET","get_high_scores.php",true);
+  //xmlhttp.open("GET","get_high_scores.php?q="+str,true);
   xmlhttp.send();
 } 
 
