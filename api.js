@@ -6,7 +6,8 @@ function sendUserInfo() {
   if (window.XMLHttpRequest) {
     xmlhttp=new XMLHttpRequest();
     xmlhttp.open("POST","add_user.php",true);
-    xmlhttp.send();
+    xmlhttp.send(playerInfoEncoded);
+    //$.post("add_user.php",{JSON.stringify(playerInfo)});
   }
 } 
 

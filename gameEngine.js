@@ -371,7 +371,7 @@ function processScoreAfterShot() {
       gameIntroSnd.currentTime=0;
       gameIntroSnd.play();
       gameState = "endscreen";
-      return;
+      sendUserInfo(); 
     }
   }
 }
