@@ -240,6 +240,13 @@ function drawSliderBars() {
   ctx.restore();
 }
 
+function drawGameInstruction() {
+  drawStatusText("Click anywhere to","green",400,390,20,'sans-serif','center');
+  drawStatusText("stop the ball!","green",400,410,20,'sans-serif','center');
+  drawStatusText("Get both balls in the","green",100,390,20,'sans-serif','center');
+  drawStatusText("bullseye to score!","green",100,410,20,'sans-serif','center');
+}
+
 function drawStatusBar() {
   var ctx = document.getElementById('gamecanvas').getContext('2d');  
   ctx.save();

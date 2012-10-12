@@ -21,7 +21,6 @@ function retrieveHighScores() {
   xmlhttp.onreadystatechange=function() {
     if (xmlhttp.readyState==4 && xmlhttp.status==200) {
     //document.getElementById("txtHint").innerHTML=xmlhttp.responseText;
-    //TODO: populate highScores array with values
       for (var i=0;i<15;i++) {
         highScores[i].name = xmlhttp.responseText ;
         highScores[i].score = xmlhttp.responseText ;

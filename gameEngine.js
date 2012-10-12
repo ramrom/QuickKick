@@ -258,6 +258,7 @@ function drawSliderAnim() {
   drawGameScreen();
   drawSliderBars();
   drawStatusBar();
+  drawGameInstruction();
   $("#sliderX").attr("value",sliderClickPosition.x);
   $("#sliderY").attr("value",sliderClickPosition.y);
   if (currentSliderX == true) { 
