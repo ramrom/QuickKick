@@ -337,8 +337,17 @@ function calculateScore() {
   else if (game.level < 5) {
     score = 200;
   }
+  else if (game.level < 7) {
+    score = 300;
+  }
+  else if (game.level < 9) {
+    score = 500;
+  }
+  else if (game.level < 12) {
+    score = 800;
+  }
   else {
-    score = 400;
+    score = 1600;
   }
   return Math.floor(score * scoreScalar);
 }
@@ -358,8 +367,12 @@ function processScoreAfterShot() {
       game.level++;
       game.shotsMade = 0;
       game.shotsLeft = 5;
-      slider.speed++;
-      slider.precision--;
+      if (game.level % 2 == 0) {
+        slider.speed++;
+      }
+      else {
+        slider.precision--;
+      }
     }
     else {
       playerInfo.score = game.score;
