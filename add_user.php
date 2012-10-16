@@ -26,6 +26,5 @@
   $dbs = mysql_select_db($database, $con);
 
   //Query database for data
-  $result = mysql_query("INSERT into enovagames.quickkick (first_name,last_name,email,score,agree_to_terms) values ($firstname,$lastname,$email,$score,$agree_to_terms)");
-
+  $result = mysql_query("INSERT into $database.$tableName (first_name,last_name,email,score,agree_to_terms) values ($firstname,$lastname,$email,$score,$agree_to_terms)"); 
 ?>
