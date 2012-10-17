@@ -19,14 +19,6 @@ function init() {
   retrieveHighScores();
 } 
 
-/*    need to find out why drawHomeScreenhere doesn't work right
-$(document).ready(function(){
-  animationTimeStamp = Date.now(); 
-  drawHomeScreen();
-  $("#gamecanvas").click(function(){canvasMouseClickHandler(event);});
-});
-*/
-
 </script>
 </head>
 
@@ -39,6 +31,9 @@ $(document).ready(function(){
 </form>
 <div id="debuginfo">
 <form>
+<br />
+<h4 id="gethighscorestxt"> *content of gethighscores.php*  </h4>
+<h4 id="httpreqstatus"> *request status*  </h4>
 <br />
 <input type="text" id="browsercursorX" size="3"> X-position mouse browser
 <input type="text" id="browsercursorY" size="3"> Y-position mouse browser
