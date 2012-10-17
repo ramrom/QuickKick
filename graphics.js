@@ -144,6 +144,7 @@ function drawHomeScreen() {
   //ctx.textAlign = "center";
   ctx.fillStyle = "red";
   //ctx.fillText("Fill in your details to enter for a chance to win 100 pounds each month for playing QuickKick!",25,330); 
+  ctx.textAlign = "left";
   ctx.fillText("Fill in your details to enter for a chance to",15,320); 
   ctx.fillText("win 100 pounds each month for playing QuickKick!",15,333); 
 
