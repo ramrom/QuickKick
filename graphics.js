@@ -279,9 +279,9 @@ function openTermsAndConditions(){
 function writeUserInputFields() {
   $("#user_txt_boxes").append('<input type="checkbox" id="agree_to_terms" style="position: absolute; left: 20px; top: 343px" size="20">');
   $("#user_txt_boxes").append('<a href="" onclick="openTermsAndConditions()" id="agree_to_terms_link" style="position: absolute; left: 40px; top: 343px" size="10">Agree to terms and conditions</a>');
-  $("#user_txt_boxes").append('<input type="text" id="firstname" style="position: absolute; left: 20px; top: 370px" size="10">');
-  $("#user_txt_boxes").append('<input type="text" id="lastname" style="position: absolute; left: 120px; top: 370px" size="10">');
-  $("#user_txt_boxes").append('<input type="text" id="email" style="position: absolute; left: 30px; top: 403px" size="20">');
+  $("#user_txt_boxes").append('<input type="text" id="firstname" style="position: absolute; left: 20px; top: 370px" size="10" maxlength="10">');
+  $("#user_txt_boxes").append('<input type="text" id="lastname" style="position: absolute; left: 120px; top: 370px" size="10" maxlength="10">');
+  $("#user_txt_boxes").append('<input type="text" id="email" style="position: absolute; left: 30px; top: 403px" size="20" maxlength="25">');
 
   if (playerInfo.agree_to_terms) { $("#agree_to_terms").attr('checked','checked'); }
   $("#firstname").val(playerInfo.firstname);
