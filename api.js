@@ -15,11 +15,7 @@ function retrieveHighScores() {
   } 
   xmlhttp.onreadystatechange=function() {
     if (xmlhttp.readyState==4 && xmlhttp.status==200) {
-      //document.getElementById("txtHint").innerHTML=xmlhttp.responseText;
-      $("getuserinfotxt").innerHTML = xmlhttp.responseText;
-      alert(xmlhttp.responseText);
       output = eval("(" + xmlhttp.responseText + ")");
-      //output = JSON.parse(xmlhttp.responseText,reviver);      //i think this needs the json2 JS file
       for (var i=0;i<15;i++) {
         highScores[i].name = output[i].first_name.substring(0,1) + ". " + output[i].last_name;
         highScores[i].score = output[i].score;
