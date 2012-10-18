@@ -21,7 +21,7 @@ function retrieveHighScores() {
       output = eval("(" + xmlhttp.responseText + ")");
       //output = JSON.parse(xmlhttp.responseText,reviver);      //i think this needs the json2 JS file
       for (var i=0;i<15;i++) {
-        highScores[i].name = output[i].first_name + output[i].last_name;
+        highScores[i].name = output[i].first_name.substring(0,1) + ". " + output[i].last_name;
         highScores[i].score = output[i].score;
       }
     }
