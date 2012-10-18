@@ -2,13 +2,7 @@
 var xmldebug = new XMLHttpRequest();
 
 function sendUserInfo() {
-  //$.post("add_user.php",{JSON.stringify(playerInfo)});
-  var playerInfoEncoded = "jsonUserInfo=" + JSON.stringify(playerInfo);
-  if (window.XMLHttpRequest) {
-    xmlhttp=new XMLHttpRequest();
-    xmlhttp.open("POST","add_user.php",true);
-    xmlhttp.send(playerInfoEncoded);
-  }
+  $.post("add_user.php",playerInfo));
 } 
 
 function retrieveHighScores() {

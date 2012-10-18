@@ -9,22 +9,21 @@
   $database = "enovagames";
   $tableName = "quickkick";
 
-  if(isset($_POST["jsonUserInfo"])){
-    $JSONArray  = json_decode($_POST["jsonUserInfo"],true); //returns null if not decoded
-    //Values can now be accessed like standard PHP array
-    if($JSONArray !== null){ 
-      $firstname = $JSONArray["firstname"];
-      $lastname = $JSONArray["lastname"];
-      $email = $JSONArray["email"];
-      $score = $JSONArray["score"];
-      $agree_to_terms = $JSONArray["agree_to_terms"];
-  
-      //Connect to mysql database
-      $con = mysql_connect($host,$user,$pass);
-      $dbs = mysql_select_db($database, $con);
+  if(isset($_POST["firstname"])) {
 
-      //Query database for data
-      $result = mysql_query("INSERT into $database.$tableName (first_name,last_name,email,score,agree_to_terms) values ($firstname,$lastname,$email,$score,$agree_to_terms)"); 
+    if ($_POST[agree_to_terms]=='true') {
+      $agree_to_terms = 1;
     }
+    else {
+      $agree_to_terms = 0;
+    }
+  
+    //Connect to mysql database
+    $con = mysql_connect($host,$user,$pass);
+    $dbs = mysql_select_db($database, $con);
+
+    //Query database for data
+    $result = mysql_query("INSERT INTO $database.$tableName (first_name,last_name,email,score,agree_to_terms) values ('$_POST[firstname]','$_POST[lastname]','$_POST[email]','$_POST[score]',$agree_to_terms)");
+    //$result = mysql_query("INSERT into $database.$tableName (first_name,last_name,email,score,agree_to_terms) values ($firstname,$lastname,$email,$score,$agree_to_terms)"); 
   } 
 ?>
