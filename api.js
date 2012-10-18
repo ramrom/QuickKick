@@ -2,7 +2,7 @@
 var xmldebug = new XMLHttpRequest();
 
 function sendUserInfo() {
-  $.post("add_user.php",playerInfo));
+  $.post("add_user.php",playerInfo);
 } 
 
 function retrieveHighScores() {
