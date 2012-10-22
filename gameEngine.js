@@ -151,7 +151,6 @@ function canvasMouseClickHandler(e) {
           gameState = "sliderToKickAnimDelay";
         }
       }
-      //(currentSliderX == true) ? currentSliderX=false : gameState = "shotanimation"; clearInterval(animationTimerID);
       break;
 
     case "inanimation":
@@ -250,7 +249,6 @@ function drawMissAnim() {
     clearInterval(animationTimerID);
     checkNewLevel();
   }
-  //keyword = keywords[Math.floor(Math.random()*keywords.length)];
 }
 
 function drawSliderAnim() {
