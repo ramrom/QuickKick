@@ -2,43 +2,58 @@
 <html>
 <title>QuickKick</title>
 <head>
+<script type="text/javascript" src="jquery.min.js"></script>
+<script type="text/javascript" src="graphics.js"></script>
+<script type="text/javascript" src="gameEngine.js"></script>
+<script type="text/javascript" src="api.js"></script>
+
 <script type='text/javascript'>
-var gamescreen = new Image();  
-var goalie = new Image();
-var ball = new Image();
-var fcount = 1;
 
 function init() {
-  gamescreen.src = 'GameScreen.png';  
-  goalie.src = 'Goalie_Sitting.png';  
-  ball.src = 'Ball_01.png';  
-  setInterval(draw,100);   
+  animationTimeStamp = Date.now(); 
+  drawHomeScreen();
+  $("#gamecanvas").click(function(event){canvasMouseClickHandler(event);});
+  gameIntroSnd.play();
+  retrieveHighScores();
+
+  //debugWriteIntervalID = setInterval(writeDebugInfo, 1000/frameRate);
+  //document.onmousemove = writeMousePosition;
 } 
 
-function draw() {
-      fcount = fcount + 1;
-      var ctx = document.getElementById('canvas').getContext('2d');  
-      
-      //ctx.globalCompositeOperation = 'destination-over';  
-      ctx.clearRect(0,0,500,500); // clear canvas  
-      
-      ctx.save(); 
-      ctx.translate(0,0);
-      ctx.restore();  
-      
-      ctx.drawImage(gamescreen,0,0); 
-      ctx.drawImage(goalie,235,85,40,60);  
-      ctx.drawImage(ball,200,360,100,100);  
-
-      ctx.font = "bold 25px sans-serif";
-      ctx.fillText("You Missed!",200,200); 
-      document.getElementById('framecounter').innerHTML = "Frame Count: " + fcount;
-    }  
 </script>
 </head>
-<body onload="init();">
-<canvas id="canvas" width="500" height="500">You're browser doesn't support canvas</canvas> 
-<h2 id="framecounter">Frame Count: </h2>
+
+<body onload="init()">
+
+<canvas id="gamecanvas" width="500" height="500">You're browser doesn't support canvas</canvas> 
+<div id="user_txt_boxes"> </div>
+
+<!--
+<form>
+<input type="button" id="debugbutton" value="Toggle Debugging Info" onClick="toggleDebugInfo()">
+</form>
+<div id="debuginfo">
+<form>
+<br />
+<h4 id="gethighscorestxt"> *content of gethighscores.php*  </h4>
+<h4 id="httpreqstatus"> *request status*  </h4>
+<br />
+<input type="text" id="browsercursorX" size="3"> X-position mouse browser
+<input type="text" id="browsercursorY" size="3"> Y-position mouse browser
+<br />
+<input type="text" id="canvascursorX" size="3"> X-position mouse canvas
+<input type="text" id="canvascursorY" size="3"> Y-position mouse canvas
+<br />
+<input type="text" id="sliderX" size="3"> X position of slider var
+<input type="text" id="sliderY" size="3"> Y-position of slider var
+</form>
+<h4 id="framecounter">Frame Count: </h4>
+<h4 id="framerate">Frame Rate: </h4>
+<h4 id="timer">Time: </h4>
+<h4 id="gamestate">Game State: </h4>
+</div>
+--!>
+
 </body>
 </html>
 
